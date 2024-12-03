@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cook The Flag</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/style.css">
+    {% block head %}{% endblock %}
+</head>
+
+<body class="d-flex w-100">
+    <div class="flex-shrink-0 p-3 border-end h-100" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+            <img class="bi pe-none me-2" width="32" height="32" src="/static/assets/cook.svg" />
+            <span class="fs-5 fw-semibold">Cook The Flag</span>
+        </a>
+        <ul class="list-unstyled ps-0">
+            {% for category in categories %}
+                {% set is_category = module.category == category if module else false if loop.index0 != 0 else true %}
+                <li class="mb-1">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 {{ '' if is_category else 'collapsed' }}"
+                        data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="{{ 'true' if is_category else 'false' }}">
+                        {{ category | capitalize }}
+                    </button>
+                    <div class="collapse {{ 'show' if is_category else '' }}" id="home-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            {% for module in categories[category] %}
+                                <li><a href="/module/{{ module }}"
+                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded"> {{ modules[module].name }} </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="container w-100 pt-5">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
+</html>
