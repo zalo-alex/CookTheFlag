@@ -1,7 +1,6 @@
+import base64
 import re
 from flask import render_template, request
-
-from copy import deepcopy
 
 import glob
 import os
@@ -13,7 +12,7 @@ class ModuleManage:
         self.modules_folder = "modules"
         self.modules = {}
         self.categories = {}
-        self.regexs = {}
+        self.regexs = []
     
     def add_to_category(self, category, module):
         if category not in self.categories:
@@ -24,12 +23,25 @@ class ModuleManage:
         
         def route():
             if request.method == "GET":
-                return render_template("module.html", module=module, modules=self.modules, categories=self.categories, args=request.args)
+                decoded_args = {}
+                for key, value in request.args.items():
+                    decoded_args[key] = base64.b64decode(value).decode('latin-1')
+                
+                return render_template("module.html", module=module, modules=self.modules, categories=self.categories, args=decoded_args)
             elif request.method == "POST":
                 type = request.json.get("type")                
                 return module.submit(type, request.json)
         
         return route
+
+    def compile_regexs(self, module):
+        for i, element in enumerate(module.layout):
+            if element.regex:
+                self.regexs.append({
+                    "regex": re.compile(element.regex),
+                    "module": module,
+                    "element_index": i
+                })
     
     def import_all(self, app):
         for module_file in glob.glob(f"{self.modules_folder}/*.py"):
@@ -41,8 +53,7 @@ class ModuleManage:
             print(f" + Imported: {custom_module.name} (/module/{module_name})")
 
             self.modules[module_name] = custom_module
-            if custom_module.regex:
-                self.regexs[re.compile(custom_module.regex)] = custom_module
+            self.compile_regexs(custom_module)
             self.add_to_category(custom_module.category, module_name)
 
             app.add_url_rule(f"/module/{module_name}", view_func=self.route(custom_module), methods=["GET", "POST"], endpoint=f"module_{module_name}")

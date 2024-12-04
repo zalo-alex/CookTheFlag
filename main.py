@@ -17,13 +17,14 @@ def regex(b64_query):
     matches = []
 
     for r in manager.regexs:
-        if not r:
-            continue
+        regex = r["regex"]
 
-        if r.match(query):
+        if regex.match(query):
+            module = r["module"]
             matches.append({
-                "url": manager.regexs[r].url,
-                "name": manager.regexs[r].name
+                "url": module.url,
+                "name": module.name,
+                "id": module.layout[r["element_index"]].id
             })
         
     return {
