@@ -3,16 +3,16 @@ from src.layout.input import Input
 from src.layout.submit import Submit
 
 class CustomModule(Module):
-    name = "Hex to ASCII"
+    name = "Binary to Number"
     category = "encoding"
-    regex = r"[0-9a-fA-F]+"
+    regex = r"[0-1]+"
     layout = [
-        Input("Hex Input", "input", textarea=True),
+        Input("Binary Input", "input", textarea=True),
         Submit("Submit", "encode"),
-        Input("ASCII Output", "output", textarea=True),
+        Input("Number Output", "output", textarea=True),
     ]
     
     def submit(type, data):
         return {
-            "output": bytes.fromhex(data["input"]).decode("latin1")
+            "output": int(data["input"], 2)
         }

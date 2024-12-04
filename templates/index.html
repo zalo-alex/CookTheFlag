@@ -1,1 +1,13 @@
 {% extends "base.html" %}
+
+{% block head %}
+<script src="/static/index.js" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="form-group">
+    <input type="text" class="form-control mb-2" placeholder="RegEx Search" id="regex-search-input" oninput="regexSearch()">
+    <ul class="list-group" id="regex-search-results">
+    </ul> 
+</div>
+{% endblock %}
