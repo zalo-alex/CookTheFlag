@@ -12,9 +12,9 @@
             <div>
                 <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
                 {% if item.textarea %}
-                    <textarea class="form-control" id="{{ item.id }}" rows="3" placeholder="{{ item.placeholder }}" name="{{ item.id }}">{{ item.value }}</textarea>
+                    <textarea class="form-control" id="{{ item.id }}" rows="3" placeholder="{{ item.placeholder }}" name="{{ item.id }}">{{ args.get(item.id, item.value) }}</textarea>
                 {% else %}
-                    <input type="{{ item.type }}" value="{{ item.value }}" name="{{ item.id }}" class="form-control" id="{{ item.id }}" placeholder="{{ item.placeholder }}">
+                    <input type="{{ item.type }}" value="{{ args.get(item.id, item.value) }}" name="{{ item.id }}" class="form-control" id="{{ item.id }}" placeholder="{{ item.placeholder }}">
                 {% endif %}
             </div>
         {% elif item.element_type == "submit" %}

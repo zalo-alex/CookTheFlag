@@ -24,7 +24,7 @@ class ModuleManage:
         
         def route():
             if request.method == "GET":
-                return render_template("module.html", module=module, modules=self.modules, categories=self.categories)
+                return render_template("module.html", module=module, modules=self.modules, categories=self.categories, args=request.args)
             elif request.method == "POST":
                 type = request.json.get("type")                
                 return module.submit(type, request.json)
