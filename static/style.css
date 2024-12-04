@@ -47,3 +47,7 @@ html {
 .btn-toggle-nav a:focus {
     background-color: var(--bs-tertiary-bg);
 }
+
+.description {
+    font-size: 12px;
+}

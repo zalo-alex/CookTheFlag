@@ -24,7 +24,8 @@ def regex(b64_query):
             matches.append({
                 "url": module.url,
                 "name": module.name,
-                "id": module.layout[r["element_index"]].id
+                "id": r["id"],
+                "element_name": r["element_name"]
             })
         
     return {

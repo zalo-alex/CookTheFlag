@@ -35,12 +35,13 @@ class ModuleManage:
         return route
 
     def compile_regexs(self, module):
-        for i, element in enumerate(module.layout):
+        for element in module.layout:
             if element.regex:
                 self.regexs.append({
                     "regex": re.compile(element.regex),
                     "module": module,
-                    "element_index": i
+                    "id": element.id,
+                    "element_name": element.name
                 })
     
     def import_all(self, app):

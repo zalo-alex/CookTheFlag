@@ -6,7 +6,7 @@ class CustomModule(Module):
     name = "Hex to ASCII"
     category = "encoding"
     layout = [
-        Input("Hex Input", "input", textarea=True, regex = r"[0-9a-fA-F]+"),
+        Input("Hex Input", "input", textarea=True, regex = r"^[0-9a-fA-F]+$"),
         Submit("Submit", "encode"),
         Input("ASCII Output", "output", textarea=True),
     ]

@@ -11,6 +11,6 @@ async function regexSearch() {
     regexSearchResults.innerHTML = ""
     
     for (module of result) {
-        regexSearchResults.innerHTML += `<li class="list-group-item"><a href="/module/${module.url}?${module.id}=${b64_query}">${module.name}</a></li>`
+        regexSearchResults.innerHTML += `<li class="list-group-item"><a class="text-decoration-none" href="/module/${module.url}?${module.id}=${b64_query}">${module.name} <span class="text-secondary description"> > ${module.element_name}</span></a></li>`
     }
 }
