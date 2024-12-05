@@ -9,7 +9,7 @@ class CustomModule(Module):
     name = "Requests"
     category = "Tool"
     layout = [
-        Input("URL", "url-input"),
+        Input("URL", "url-input", regex=r"^https?:\/\/([A-Za-z0-9.-]+)(:[0-9]{1,5})?(\/[^\s]*)?$"),
         Select("Method", "method", ["GET", "POST"]),
         Submit("Send", "send"),
         Input("Text Response", "output", textarea=True),

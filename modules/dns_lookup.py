@@ -11,7 +11,7 @@ class CustomModule(Module):
     name = "DNS Lookup"
     category = "Tool"
     layout = [
-        Input("Domain name", "dn-input"),
+        Input("Domain name", "dn-input", regex=r"^(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z0-9-]{1,63})*\.[A-Za-z]{2,}$"),
         Submit("Lookup", "lookup"),
         Input("DNS Lookup", "lookup-output", textarea=True),
         Input("DNS Records", "records-output", textarea=True),
