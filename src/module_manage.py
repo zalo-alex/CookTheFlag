@@ -43,6 +43,12 @@ class ModuleManage:
                     "id": element.id,
                     "element_name": element.name
                 })
+        if module.regex:
+            self.regexs.append({
+                "regex": re.compile(module.regex),
+                "module": module,
+                "id": None,
+            })
     
     def import_all(self, app):
         for module_file in glob.glob(f"{self.modules_folder}/*.py"):
