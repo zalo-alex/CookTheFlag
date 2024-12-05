@@ -22,13 +22,13 @@
         </a>
         <ul class="list-unstyled ps-0">
             {% for category in categories %}
-                {% set is_category = module.category == category if module else false if loop.index0 != 0 else true %}
+                {% set is_category = module.category == category if module else false %}
                 <li class="mb-1">
                     <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 {{ '' if is_category else 'collapsed' }}"
-                        data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="{{ 'true' if is_category else 'false' }}">
+                        data-bs-toggle="collapse" data-bs-target="#{{ category }}-collapse" aria-expanded="{{ 'true' if is_category else 'false' }}">
                         {{ category | capitalize }}
                     </button>
-                    <div class="collapse {{ 'show' if is_category else '' }}" id="home-collapse">
+                    <div class="collapse {{ 'show' if is_category else '' }}" id="{{ category }}-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             {% for module in categories[category] %}
                                 <li><a href="/module/{{ module }}"
