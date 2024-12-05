@@ -6,6 +6,7 @@ Cook The Flag is a web-based CTF tool that lets you easily extend its functional
 ## 📃 Features
 
  - 🧮 Basic Encryption (Base64, Hex, ...)
+ - 🔐 Hashing (MD5, SHA-1, Blake2b, ...)
  - 🔨 Tools (Requests, ...)
  - 🔍 RegEx search
 
