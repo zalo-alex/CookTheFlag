@@ -13,5 +13,5 @@ class CustomModule(Module):
     
     def submit(type, data):
         return {
-            "output": data["input"].encode("utf-8").hex()
+            "output": data["input"].encode("latin-1").hex()
         }

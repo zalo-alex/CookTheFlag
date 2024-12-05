@@ -16,5 +16,5 @@ class CustomModule(Module):
     
     def submit(type, data):
         return {
-            "output": base64.b64encode(data["input"].encode("utf-8")).decode("utf-8")
+            "output": base64.b64encode(data["input"].encode("latin-1")).decode("latin-1")
         }
