@@ -11,6 +11,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/base.js" defer></script>
     {% block head %}{% endblock %}
 </head>
 
@@ -20,6 +21,9 @@
             <img class="bi pe-none me-2" width="32" height="32" src="/static/assets/cook.svg" />
             <span class="fs-5 fw-semibold">Cook The Flag</span>
         </a>
+        <div>
+            <input type="text" class="form-control mb-2" placeholder="Search" id="search-input" oninput="search()">
+        </div>
         <ul class="list-unstyled ps-0">
             {% for category in categories %}
                 {% set is_category = module.category == category if module else false %}
