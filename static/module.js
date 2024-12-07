@@ -4,6 +4,9 @@ form.addEventListener("submit", async (e) => {
     e.preventDefault()
 
     const type = e.submitter.value
+    e.submitter.disabled = true
+    const text = e.submitter.textContent
+    e.submitter.textContent = "..."
 
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
@@ -23,4 +26,7 @@ form.addEventListener("submit", async (e) => {
     for (const [id, value] of Object.entries(json)) {
         document.getElementById(id).value = value
     }
+
+    e.submitter.disabled = false
+    e.submitter.textContent = text
 })
