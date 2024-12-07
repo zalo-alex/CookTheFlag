@@ -31,7 +31,6 @@ class CustomModule(Module):
         return all_records
     
     def submit(type, data):
-        print(whois.whois(data["dn-input"]))
         return {
             "lookup-output": str(whois.whois(data["dn-input"])),
             "records-output": json.dumps(CustomModule.get_all_dns_records(data["dn-input"]), indent=4),
