@@ -29,8 +29,11 @@ class ModuleManage:
                 
                 return render_template("module.html", module=module, modules=self.modules, categories=self.categories, args=decoded_args)
             elif request.method == "POST":
-                type = request.json.get("type")                
-                return module.submit(type, request.json)
+                type = request.json.get("type")
+                try:
+                    return module.submit(type, request.json)
+                except Exception as e:
+                    return {"__error": str(e)}
         
         return route
 

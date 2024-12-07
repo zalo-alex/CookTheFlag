@@ -8,30 +8,32 @@
 <h1>{{ module.name }}</h1>
 <form id="form" class="d-flex flex-column gap-3">
     {% for item in module.layout %}
-        {% if item.element_type == "input" %}
-            <div>
-                <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
-                {% if item.textarea %}
-                    <textarea class="form-control" id="{{ item.id }}" rows="3" placeholder="{{ item.placeholder }}" name="{{ item.id }}">{{ args.get(item.id, item.value) }}</textarea>
-                {% else %}
-                    <input type="{{ item.type }}" value="{{ args.get(item.id, item.value) }}" name="{{ item.id }}" class="form-control" id="{{ item.id }}" placeholder="{{ item.placeholder }}">
-                {% endif %}
-            </div>
-        {% elif item.element_type == "submit" %}
-            <button class="btn btn-primary" name="submit" value="{{ item.id }}" type="submit">{{ item.name }}</button>
-        {% elif item.element_type == "select" %}
-            <div>
-                <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
-                <select name="{{ item.id }}" id="{{ item.id }}" class="form-select">
-                    {% for option in item.options %}
-                        <option value="{{ option }}">{{ option }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        {% else %}
-            <p>{{ item.element_type }}</p>
-        {% endif %}
+    {% if item.element_type == "input" %}
+        <div>
+            <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
+            {% if item.textarea %}
+            <textarea class="form-control" id="{{ item.id }}" rows="3" placeholder="{{ item.placeholder }}"
+                name="{{ item.id }}">{{ args.get(item.id, item.value) }}</textarea>
+            {% else %}
+            <input type="{{ item.type }}" value="{{ args.get(item.id, item.value) }}" name="{{ item.id }}"
+                class="form-control" id="{{ item.id }}" placeholder="{{ item.placeholder }}">
+            {% endif %}
+        </div>
+    {% elif item.element_type == "submit" %}
+        <button class="btn btn-primary" name="submit" value="{{ item.id }}" type="submit">{{ item.name }}</button>
+        <div class="alert alert-danger d-none" role="alert" id="{{ item.id }}-error"></div>
+    {% elif item.element_type == "select" %}
+        <div>
+            <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
+            <select name="{{ item.id }}" id="{{ item.id }}" class="form-select">
+                {% for option in item.options %}
+                <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    {% else %}
+    <p>{{ item.element_type }}</p>
+    {% endif %}
     {% endfor %}
 </form>
 {% endblock %}
-
