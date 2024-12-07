@@ -5,6 +5,7 @@ from flask import render_template, request
 import glob
 import os
 import importlib
+import traceback
 
 class ModuleManage:
     
@@ -33,6 +34,7 @@ class ModuleManage:
                 try:
                     return module.submit(type, request.json)
                 except Exception as e:
+                    traceback.print_exc()
                     return {"__error": str(e)}
         
         return route
