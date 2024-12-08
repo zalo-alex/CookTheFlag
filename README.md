@@ -7,12 +7,12 @@ Cook The Flag is a web-based CTF tool that lets you easily extend its functional
  - 🧮 Basic Encryption (Base64, Hex, ...)
  - 🔨 Tools (Requests, ...)
  - 🔍 RegEx search
+ - 🐳 Docker image
 
 ## 🌠 In the future
  - [ ] ➕ More tools (NMap, RsaCtfTool, ...)
  - [ ] 🔧 More conversions (Rot13, ...)
  - [ ] 🌐 Remote access 
- - [ ] 🐳 Docker image
 ## 🚀 Installation
 ```bash
 docker run -p 8080:8080 azalo/cooktheflag
