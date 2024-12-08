@@ -15,13 +15,18 @@ Cook The Flag is a web-based CTF tool that lets you easily extend its functional
  - [ ] 🐳 Docker image
 ## 🚀 Installation
 ```bash
+docker run -p 8080:8080 azalo/cooktheflag
+```
+<details>
+<summary>Other methods (Latest updates)</summary>
+
+### Using Dockerfile
+```bash
 git clone https://github.com/zalo-alex/CookTheFlag
 cd CookTheFlag
 sudo docker build -t cooktheflag .
 sudo docker run -p 8080:8080 cooktheflag
 ```
-<details>
-<summary>Other ways</summary>
 
 ### Using Python
 
