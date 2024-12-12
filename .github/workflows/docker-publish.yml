@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     tags:
-      - 'v*'  # Trigger only on version tags like v1.0.2
+      - 'v*'
 
 jobs:
   build-and-push:
@@ -21,8 +21,8 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t your-dockerhub-username/your-repo-name:${{ github.ref_name }} .
+        docker build -t azalo/cooktheflag:${{ github.ref_name }} .
 
     - name: Push Docker image
       run: |
-        docker push your-dockerhub-username/your-repo-name:${{ github.ref_name }}
+        docker push azalo/cooktheflag:${{ github.ref_name }}
