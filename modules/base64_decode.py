@@ -1,8 +1,5 @@
 from src.module import Module
-from src.layout.input import Input
-from src.layout.submit import Submit
-
-import base64
+from src.layout import *
 
 class CustomModule(Module):
     name = "Base64 Decode"

@@ -1,6 +1,5 @@
 from src.module import Module
-from src.layout.input import Input
-from src.layout.submit import Submit
+from src.layout import *
 
 class CustomModule(Module):
     name = "Hex to ASCII"

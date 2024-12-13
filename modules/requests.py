@@ -1,8 +1,5 @@
 from src.module import Module
-from src.layout.input import Input
-from src.layout.submit import Submit
-from src.layout.select import Select
-from src.layout.key_value import KeyValue
+from src.layout import *
 
 import requests
 

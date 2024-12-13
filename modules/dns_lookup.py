@@ -1,7 +1,5 @@
 from src.module import Module
-from src.layout.input import Input
-from src.layout.submit import Submit
-from src.layout.select import Select
+from src.layout import *
 
 import json
 import whois
