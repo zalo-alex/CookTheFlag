@@ -3,7 +3,7 @@ from src.layout.input import Input
 from src.layout.submit import Submit
 
 class CustomModule(Module):
-    name = "IPv4 to Base"
+    name = "IPv4 convert"
     category = "encoding"
     layout = [
         Input("IPv4 Input", "input"),
@@ -11,10 +11,12 @@ class CustomModule(Module):
         Input("Binary Output", "bin-output"),
         Input("Hex Output", "hex-output"),
     ]
-    
-    def submit(type, data):
-        parts = data["input"].split(".")
+    script = """
+        var parts = data["input"].split(".")
+        var bin_res = parts.map((p) => parseInt(p).toString(2)).join(".")
+        var hex_res = parts.map((p) => parseInt(p).toString(16)).join(".")
         return {
-            "bin-output": ".".join([ bin(int(p))[2:] for p in parts ]),
-            "hex-output": ".".join([ hex(int(p))[2:] for p in parts ])
+            "bin-output": bin_res,
+            "hex-output": hex_res
         }
+    """

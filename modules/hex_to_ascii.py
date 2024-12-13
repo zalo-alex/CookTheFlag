@@ -10,8 +10,8 @@ class CustomModule(Module):
         Submit("Submit", "encode"),
         Input("ASCII Output", "output", textarea=True),
     ]
-    
-    def submit(type, data):
+    script = """
         return {
-            "output": bytes.fromhex(data["input"]).decode("latin1")
+            "output": data["input"].match(/.{1,2}/g).map((v) => String.fromCharCode(parseInt(v, 16))).join('')
         }
+    """

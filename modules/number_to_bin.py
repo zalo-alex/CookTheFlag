@@ -10,8 +10,8 @@ class CustomModule(Module):
         Submit("Submit", "encode"),
         Input("Binary Output", "output", textarea=True),
     ]
-    
-    def submit(type, data):
+    script = """
         return {
-            "output": bin(int(data["input"]))[2:]
+            "output": parseInt(data["input"]).toString(2)
         }
+    """

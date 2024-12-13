@@ -10,9 +10,10 @@ class CustomModule(Module):
         Submit("Submit", "encode"),
         Input("IPv4 Output", "output")
     ]
-    
-    def submit(type, data):
-        parts = data["input"].split(".")
+    script = """
+        const parts = data["input"].split(".")
+        const res = parts.map((p) => parseInt(p, 16))
         return {
-            "output": ".".join([ str(int(p, 16)) for p in parts ])
+            "output": res.join(".")
         }
+    """

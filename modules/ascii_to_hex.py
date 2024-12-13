@@ -12,10 +12,7 @@ class CustomModule(Module):
     ]
     script = """
         var input = data["input"]
-        var res = ""
-        for (let i = 0; i < input.length; i++) {
-            res += input[i].charCodeAt(0).toString(16)
-        }
+        var res = input.split("").map((c) => c.charCodeAt(0).toString(16)).join("")
         return {
             "output": res
         }
