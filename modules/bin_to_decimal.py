@@ -1,13 +1,14 @@
 from src.module import Module
 from src.layout import *
+from src.regexs import Regexs
 
 class CustomModule(Module):
-    name = "Binary to Number"
+    name = "Binary to Decimal"
     category = "encoding"
     layout = [
-        Input("Binary Input", "input", textarea=True, regex=r"[0-1]+"),
+        Input("Binary Input", "input", textarea=True, regex=Regexs.BIN),
         Submit("Submit", "encode"),
-        Input("Number Output", "output", textarea=True),
+        Input("Decimal Output", "output", textarea=True),
     ]
     script = """
         return {

@@ -1,11 +1,12 @@
 from src.module import Module
 from src.layout import *
+from src.regexs import Regexs
 
 class CustomModule(Module):
     name = "Binary to ASCII"
     category = "encoding"
     layout = [
-        Input("Bin Input", "input", textarea=True, regex=r"[0-1]+"),
+        Input("Bin Input", "input", textarea=True, regex=Regexs.BIN),
         Submit("Submit", "encode"),
         Input("ASCII Output", "output", textarea=True),
     ]

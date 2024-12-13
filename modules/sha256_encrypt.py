@@ -1,12 +1,13 @@
 from src.module import Module
 from src.layout import *
+from src.regexs import Regexs
 
 import hashlib
 
 class CustomModule(Module):
     name = "SHA-256 Encrypt"
     category = "Hashing"
-    regex = r"^[a-fA-F0-9]{64}$"
+    regex = Regexs.SHA256
     layout = [
         Input("Text Input", "input", textarea=True),
         Submit("Submit", "encode"),

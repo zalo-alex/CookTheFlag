@@ -1,10 +1,11 @@
 from src.module import Module
 from src.layout import *
+from src.regexs import Regexs
 
 class CustomModule(Module):
     name = "Base64 Encode"
     category = "encoding"
-    regex=r"^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{4}|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{2}={2})$"
+    regex=Regexs.BASE64
     layout = [
         Input("Text Input", "input", textarea=True),
         Submit("Submit", "encode"),

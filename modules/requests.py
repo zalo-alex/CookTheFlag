@@ -1,5 +1,6 @@
 from src.module import Module
 from src.layout import *
+from src.regexs import Regexs
 
 import requests
 
@@ -7,7 +8,7 @@ class CustomModule(Module):
     name = "Requests"
     category = "Tool"
     layout = [
-        Input("URL", "url-input", regex=r"^https?:\/\/([A-Za-z0-9.-]+)(:[0-9]{1,5})?(\/[^\s]*)?$"),
+        Input("URL", "url-input", regex=Regexs.URL),
         Select("Method", "method", ["GET", "POST"]),
         KeyValue("Headers", "headers"),
         Submit("Send", "send"),

@@ -39,18 +39,18 @@ class ModuleManage:
         
         return route
 
-    def compile_regexs(self, module):
+    def find_regexs(self, module):
         for element in module.layout:
             if element.regex:
                 self.regexs.append({
-                    "regex": re.compile(element.regex),
+                    "regex": element.regex,
                     "module": module,
                     "id": element.id,
                     "element_name": element.name
                 })
         if module.regex:
             self.regexs.append({
-                "regex": re.compile(module.regex),
+                "regex": module.regex,
                 "module": module,
                 "id": None,
             })
@@ -65,7 +65,7 @@ class ModuleManage:
             print(f" + Imported: {custom_module.name} (/module/{module_name})")
 
             self.modules[module_name] = custom_module
-            self.compile_regexs(custom_module)
+            self.find_regexs(custom_module)
             self.add_to_category(custom_module.category, module_name)
 
             app.add_url_rule(f"/module/{module_name}", view_func=self.route(custom_module), methods=["GET", "POST"], endpoint=f"module_{module_name}")

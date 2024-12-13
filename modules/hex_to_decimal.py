@@ -1,13 +1,14 @@
 from src.module import Module
 from src.layout import *
+from src.regexs import Regexs
 
 class CustomModule(Module):
-    name = "Hex to Number"
+    name = "Hex to Decimal"
     category = "encoding"
     layout = [
-        Input("Hex Input", "input", textarea=True, regex=r"^[0-9a-fA-F]+$"),
+        Input("Hex Input", "input", textarea=True, regex=Regexs.HEX),
         Submit("Submit", "encode"),
-        Input("Number Output", "output", textarea=True),
+        Input("Decimal Output", "output", textarea=True),
     ]
     script = """
         return {

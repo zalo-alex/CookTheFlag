@@ -5,9 +5,9 @@ class CustomModule(Module):
     name = "Binary to IPv4"
     category = "encoding"
     layout = [
-        Input("Binary Input", "input"),
+        Input("IPv4 Binary Input", "input"),
         Submit("Submit", "encode"),
-        Input("IPv4 Output", "output")
+        Input("IPv4 Decimal Output", "output")
     ]
     script = """
         const parts = data["input"].split(".")

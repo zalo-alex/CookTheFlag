@@ -1,11 +1,12 @@
 from src.module import Module
 from src.layout import *
+from src.regexs import Regexs
 
 class CustomModule(Module):
-    name = "Number to Binary"
+    name = "Decimal to Binary"
     category = "encoding"
     layout = [
-        Input("Number Input", "input", textarea=True, regex=r"[0-9]+"),
+        Input("Decimal Input", "input", textarea=True, regex=Regexs.DEC),
         Submit("Submit", "encode"),
         Input("Binary Output", "output", textarea=True),
     ]

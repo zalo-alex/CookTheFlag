@@ -1,12 +1,13 @@
 from src.module import Module
 from src.layout import *
+from src.regexs import Regexs
 
 import hashlib
 
 class CustomModule(Module):
     name = "Blake2s Encrypt"
     category = "Hashing"
-    regex = r"^[a-fA-F0-9]{64}$"
+    regex = Regexs.BLAKE2S
     layout = [
         Input("Text Input", "input", textarea=True),
         Submit("Submit", "encode"),

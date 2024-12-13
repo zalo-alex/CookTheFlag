@@ -1,5 +1,6 @@
 from src.module import Module
 from src.layout import *
+from src.regexs import Regexs
 
 import json
 import whois
@@ -9,7 +10,7 @@ class CustomModule(Module):
     name = "DNS Lookup"
     category = "Tool"
     layout = [
-        Input("Domain name", "dn-input", regex=r"^(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z0-9-]{1,63})*\.[A-Za-z]{2,}$"),
+        Input("Domain name", "dn-input", regex=Regexs.DOMAIN),
         Submit("Lookup", "lookup"),
         Input("DNS Lookup", "lookup-output", textarea=True),
         Input("DNS Records", "records-output", textarea=True),
