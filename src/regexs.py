@@ -6,7 +6,7 @@ class Regexs:
     HEX = re.compile(r"^(0x)?[0-9a-fA-F]+(?:\s[0-9a-fA-F]+)*$")
     DEC = re.compile(r"^\d+(?:\s\d+)*$")
     
-    BASE64 = re.compile(r"^[A-Za-z0-9+\/]{4}*(?:[A-Za-z0-9+\/]{2}([A-Za-z0-9+\/]{2}|[A-Za-z0-9+\/]{1}=|={2}))$")
+    BASE64 = re.compile(r"^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}([A-Za-z0-9+\/]{2}|[A-Za-z0-9+\/]{1}=|={2}))?$")
     
     BLAKE2B = re.compile(r"^[a-fA-F0-9]{128}$")
     BLAKE2S = re.compile(r"^[a-fA-F0-9]{64}$")
