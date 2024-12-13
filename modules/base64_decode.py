@@ -13,8 +13,6 @@ class CustomModule(Module):
         Submit("Submit", "encode"),
         Input("Text Output", "output", textarea=True),
     ]
-    
-    def submit(type, data):
-        return {
-            "output": base64.b64decode(data["input"].encode("latin-1")).decode("latin-1")
-        }
+    script = """return {
+        "output": atob(data["input"])
+    }"""

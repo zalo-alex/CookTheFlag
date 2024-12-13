@@ -10,8 +10,13 @@ class CustomModule(Module):
         Submit("Submit", "encode"),
         Input("Hex Output", "output", textarea=True),
     ]
-    
-    def submit(type, data):
-        return {
-            "output": data["input"].encode("latin-1").hex()
+    script = """
+        var input = data["input"]
+        var res = ""
+        for (let i = 0; i < input.length; i++) {
+            res += input[i].charCodeAt(0).toString(16)
         }
+        return {
+            "output": res
+        }
+    """
