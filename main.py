@@ -7,6 +7,10 @@ import re
 app = Flask(__name__)
 manager = ModuleManage()
 
+@app.errorhandler(404) 
+def not_found(e): 
+    return render_template("404.html", modules=manager.modules, categories=manager.categories) 
+
 @app.route("/")
 def index():
     return render_template("index.html", modules=manager.modules, categories=manager.categories)
