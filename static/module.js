@@ -36,7 +36,7 @@ window.addEventListener("load", () => {
 
         var json;
 
-        if (isClientSide) {
+        if (typeof isClientSide !== "undefined") {
             json = await executeClientSide(type, data)
         } else {
             json = await executeServerSide(type, data)
