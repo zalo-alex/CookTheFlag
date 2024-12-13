@@ -2,6 +2,16 @@
 
 {% block head %}
 <script src="/static/module.js"></script>
+{% if module.script %}
+    <script>
+        const isClientSide = true;
+        const clientSideFunction = new Function(`
+            const type = arguments[0];
+            const data = arguments[1];
+            {{ module.script | safe }}
+        `)
+    </script>
+{% endif %}
 {% endblock %}
 
 {% block content %}

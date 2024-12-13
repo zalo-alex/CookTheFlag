@@ -34,17 +34,13 @@ window.addEventListener("load", () => {
             }
         }
 
-        const res = await fetch(location.pathname, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                type,
-                ...data
-            })
-        })
-        const json = await res.json()
+        var json;
+
+        if (isClientSide) {
+            json = await executeClientSide(type, data)
+        } else {
+            json = await executeServerSide(type, data)
+        }
 
         if (json.__error) {
             resetButton()
@@ -60,6 +56,30 @@ window.addEventListener("load", () => {
         resetButton()
     })
 })
+
+async function executeServerSide(type, data) {
+    const res = await fetch(location.pathname, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            type,
+            ...data
+        })
+    })
+    return await res.json()
+}
+
+function executeClientSide(type, data) {
+    try {
+        return clientSideFunction(type, data)
+    } catch(e) {
+        return {
+            "__error": e.toString()
+        }
+    }
+}
 
 function addKeyValueRow(id, key = "", value = "") {
     var rowId = new Date().toJSON()
