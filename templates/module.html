@@ -57,4 +57,5 @@
     </div>
     {% endfor %}
 </form>
+<span class="figure-caption text-end mt-5 d-block">{{ module.name }} ({{ module.url }}) | {{ module.category }} | {{ "Client side" if module.script else "Server side" }}</span>
 {% endblock %}
