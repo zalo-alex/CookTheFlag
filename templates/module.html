@@ -68,6 +68,11 @@
             </div>
             <button class="btn btn-primary mt-2" type="button" value="{{ item.id }}" onclick="addKeyValueRow('{{ item.id }}')">+</button>
 
+        {% elif item.element_type == "checkbox" %}
+            <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
+            <input type="checkbox" name="{{ item.id }}"
+                class="form-check-input" id="{{ item.id }}">
+
         {% else %}
             <p>{{ item.element_type }}</p>
         {% endif %}
