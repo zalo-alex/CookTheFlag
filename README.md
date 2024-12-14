@@ -5,12 +5,12 @@ Cook The Flag is a web-based CTF tool that lets you easily extend its functional
 ## 📃 Features
 
  - 🧮 Basic Encryption (Base64, Hex, ...)
- - 🔨 Tools (Requests, ...)
+ - 🔨 Tools (Requests, NMap, ...)
  - 🔍 RegEx search
  - 🐳 Docker image
 
 ## 🌠 In the future
- - [ ] ➕ More tools (NMap, RsaCtfTool, ...)
+ - [ ] ➕ More tools (RsaCtfTool, ...)
  - [ ] 🔧 More conversions (Rot13, ...)
  - [ ] 🌐 Remote access 
 ## 🚀 Installation
