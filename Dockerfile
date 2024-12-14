@@ -1,5 +1,11 @@
 FROM python:3.10-slim
 
+RUN apt-get update
+
+# Install NMap
+RUN apt-get install -y nmap
+
+# Install CookTheFlag
 WORKDIR /app
 
 COPY . /app
