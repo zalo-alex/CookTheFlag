@@ -42,3 +42,15 @@ class ActionDummy:
             process,
             """data = data.replaceAll(options.old, options.new)"""
         )
+    
+    @action_wrapper
+    def strip(self) -> ActionDummy:
+        def process(data, options):
+            return data.strip()
+        
+        return Action(
+            "strip", 
+            {},
+            process,
+            """data = data.trim()"""
+        )
