@@ -10,6 +10,7 @@
             const data = arguments[1];
             {{ module.script | safe }}
         `)
+        const parsers = {};
     </script>
 {% endif %}
 {% endblock %}
@@ -18,6 +19,22 @@
 <h1>{{ module.name }}</h1>
 <form id="form" class="d-flex flex-column gap-3">
     {% for item in module.layout %}
+
+    {% if module.script and item.parser %} 
+        <script>
+            parsers["{{ item.id }}"] = new Function(`
+                var data = arguments[0];
+                var options = {};
+                
+                {% for action in item.parser.actions %}
+                    options = {{ action.options | safe }}
+                    {{ action.script | safe }}
+                {% endfor %}
+
+                return data
+            `)
+        </script>
+    {% endif %}
 
     <div class="{{ item.element_type }}" id="container-{{ item.id }}">
         {% if item.element_type == "input" %}

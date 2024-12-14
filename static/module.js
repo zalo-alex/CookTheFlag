@@ -72,6 +72,13 @@ async function executeServerSide(type, data) {
 }
 
 function executeClientSide(type, data) {
+    
+    for (const [id, value] of Object.entries(data)) {
+        if (parsers[id]) {
+            data[id] = parsers[id](value)
+        }
+    }
+
     try {
         return clientSideFunction(type, data)
     } catch(e) {

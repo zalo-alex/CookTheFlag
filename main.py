@@ -2,7 +2,6 @@ from flask import Flask, render_template
 from src.module_manage import ModuleManage
 
 import base64
-import re
 
 app = Flask(__name__)
 manager = ModuleManage()
