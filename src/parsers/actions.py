@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 class Action:
     def __init__(self, name, options, process, script=None):
         self.name = name
@@ -53,4 +55,15 @@ class ActionDummy:
             {},
             process,
             """data = data.trim()"""
+        )
+    
+    @action_wrapper
+    def path(self) -> ActionDummy:
+        def process(data, options):
+            return Path(data).resolve().as_posix()
+        
+        return Action(
+            "path", 
+            {},
+            process
         )
