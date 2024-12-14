@@ -6,7 +6,7 @@ import hashlib
 
 class CustomModule(Module):
     name = "MD5 Encrypt"
-    category = "Hashing"
+    category = "hashing"
     regex = Regexs.MD5
     layout = [
         Input("Text Input", "input", textarea=True),

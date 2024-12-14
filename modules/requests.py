@@ -6,7 +6,7 @@ import requests
 
 class CustomModule(Module):
     name = "Requests"
-    category = "Tool"
+    category = "tool"
     layout = [
         Input("URL", "url-input", regex=Regexs.URL),
         Select("Method", "method", ["GET", "POST"]),

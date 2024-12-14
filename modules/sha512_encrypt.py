@@ -6,7 +6,7 @@ import hashlib
 
 class CustomModule(Module):
     name = "SHA-512 Encrypt"
-    category = "Hashing"
+    category = "hashing"
     regex = Regexs.SHA512
     layout = [
         Input("Text Input", "input", textarea=True),

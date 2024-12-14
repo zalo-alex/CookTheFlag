@@ -6,7 +6,7 @@ import hashlib
 
 class CustomModule(Module):
     name = "Blake2b Encrypt"
-    category = "Hashing"
+    category = "hashing"
     regex = Regexs.BLAKE2B
     layout = [
         Input("Text Input", "input", textarea=True),

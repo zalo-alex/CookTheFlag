@@ -8,7 +8,7 @@ import dns.resolver
 
 class CustomModule(Module):
     name = "DNS Lookup"
-    category = "Tool"
+    category = "tool"
     layout = [
         Input("Domain name", "dn-input", regex=Regexs.DOMAIN),
         Submit("Lookup", "lookup"),
