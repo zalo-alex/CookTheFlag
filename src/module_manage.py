@@ -22,30 +22,14 @@ class ModuleManage:
     
     def route(self, module):
         
-        def route():
+        def get():
+            decoded_args = {}
+            for key, value in request.args.items():
+                decoded_args[key] = base64.b64decode(value).decode('latin-1')
             
-            if request.method == "GET":
-                decoded_args = {}
-                for key, value in request.args.items():
-                    decoded_args[key] = base64.b64decode(value).decode('latin-1')
-                
-                return render_template("module.html", module=module, modules=self.modules, categories=self.categories, args=decoded_args)
-            
-            elif request.method == "POST":
-                
-                type = request.json.get("type")
-                
-                for element in module.layout:
-                    if element.parser:
-                        request.json[element.id] = element.parser.parse(request.json[element.id])
-                
-                try:
-                    return module.submit(type, request.json)
-                except Exception as e:
-                    traceback.print_exc()
-                    return {"__error": str(e)}
+            return render_template("module.html", module=module, modules=self.modules, categories=self.categories, args=decoded_args)
         
-        return route
+        return get
 
     def find_regexs(self, module):
         for element in module.layout:
@@ -82,4 +66,4 @@ class ModuleManage:
             self.compile_parsers(custom_module)
             self.add_to_category(custom_module.category, module_name)
 
-            app.add_url_rule(f"/module/{module_name}", view_func=self.route(custom_module), methods=["GET", "POST"], endpoint=f"module_{module_name}")
+            app.add_url_rule(f"/module/{module_name}", view_func=self.route(custom_module), endpoint=f"module_{module_name}")

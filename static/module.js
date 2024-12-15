@@ -1,4 +1,29 @@
 let form = undefined
+let resetButton = () => {}
+const ws = new WebSocket("ws://" + location.host + "/ws")
+
+function handleResponseData(data) {
+    for (const [id, value] of Object.entries(data)) {
+        document.getElementById(id).value = value
+    }
+
+    if (data.__error) {
+        resetButton()
+        errorAlert.textContent = data.__error
+        errorAlert.classList.remove("d-none")
+        return
+    }
+}
+
+ws.onmessage = (event) => {
+    const payload = JSON.parse(event.data)
+    if (payload.type == "response") {
+        handleResponseData(payload.data)
+    }
+    else if (payload.type == "done") {
+        resetButton()
+    }
+}
 
 window.addEventListener("load", () => {
     form = document.getElementById("form")
@@ -14,7 +39,7 @@ window.addEventListener("load", () => {
         const errorAlert = document.getElementById(`${type}-error`)
         errorAlert.classList.add("d-none")
 
-        const resetButton = () => {
+        resetButton = () => {
             e.submitter.disabled = false
             e.submitter.textContent = text
         }
@@ -38,37 +63,23 @@ window.addEventListener("load", () => {
 
         if (typeof isClientSide !== "undefined") {
             json = await executeClientSide(type, data)
-        } else {
-            json = await executeServerSide(type, data)
-        }
-
-        if (json.__error) {
+            handleResponseData(json)
             resetButton()
-            errorAlert.textContent = json.__error
-            errorAlert.classList.remove("d-none")
-            return
+        } else {
+            await executeServerSide(type, data)
         }
-
-        for (const [id, value] of Object.entries(json)) {
-            document.getElementById(id).value = value
-        }
-
-        resetButton()
     })
 })
 
 async function executeServerSide(type, data) {
-    const res = await fetch(location.pathname, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            type,
-            ...data
-        })
-    })
-    return await res.json()
+    ws.send(JSON.stringify({
+        "type": "submit",
+        "payload": {
+            "module": location.pathname.split("/").pop(),
+            "type": type,
+            "data": data
+        }
+    }))
 }
 
 function executeClientSide(type, data) {
