@@ -20,7 +20,10 @@ class CustomModule(Module):
         if data.get('version'): args.append('-sV')
         if data.get('os'): args.append('-O')
         cmd = ["nmap", *args, data['input']]
-        return {
-            "command": " ".join(cmd),
-            "output": Exec(cmd).run()
+        yield {
+            "command": " ".join(cmd)
         }
+        for line in Exec(cmd).run():
+            yield {
+                "output": line
+            }

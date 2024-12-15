@@ -6,4 +6,8 @@ class Exec:
         self.args = args
     
     def run(self):
-        return subprocess.run([*self.args], capture_output=True, text=True).stdout
+        process = subprocess.Popen([*self.args], stdout=subprocess.PIPE)
+        total = b""
+        for stdout_line in iter(process.stdout.readline, b''):
+            total += stdout_line
+            yield total.decode("latin-1")
