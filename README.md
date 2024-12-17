@@ -42,5 +42,5 @@ python main.py
 ```
 </details>
 
-## 👤 Contributionsa
+## 👤 Contributions
 You can make your own modules and share them with a pull request
