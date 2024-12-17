@@ -6,4 +6,4 @@ class Select(Element):
     def __init__(self, name, id, options=[]):
         self.name = name
         self.id = id
-        self.options = options
+        self.options = zip(options, options if type(options) == list else options.values())
