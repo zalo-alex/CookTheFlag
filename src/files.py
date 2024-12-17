@@ -29,7 +29,6 @@ class Files:
         for folder in sub:
             if type(sub[folder]) == dict:
                 folder_path = os.path.join(path, folder)
-                print(folder_path)
                 os.makedirs(folder_path, exist_ok=True)
                 self.init_folders(folder_path, sub[folder])
     

@@ -87,7 +87,6 @@ def regex(b64_query):
 def ws(sock):
     while True:
         payload = json.loads(sock.receive())
-        print(payload)
         type = payload.get("type")
         payload = payload.get("payload")
         
