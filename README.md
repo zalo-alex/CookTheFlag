@@ -13,12 +13,17 @@ Cook The Flag is a web-based CTF tool that lets you easily extend its functional
  - [ ] ➕ More tools (RsaCtfTool, ...)
  - [ ] 🔧 More conversions (Rot13, ...)
  - [ ] 🌐 Remote access 
-## 🚀 Installation
+## 🚀 Usage
 ```bash
-docker run -p 8080:8080 azalo/cooktheflag
+curl -s https://raw.githubusercontent.com/zalo-alex/CookTheFlag/refs/heads/main/run.sh | bash
 ```
 <details>
 <summary>Other methods (Latest updates)</summary>
+
+### Using DockerHub
+```bash
+docker run --pull=always --volume ~/.cooktheflag:/data -p 8080:8080 azalo/cooktheflag
+```
 
 ### Using Dockerfile
 ```bash
@@ -29,7 +34,6 @@ sudo docker run -p 8080:8080 cooktheflag
 ```
 
 ### Using Python
-
 ```bash
 git clone https://github.com/zalo-alex/CookTheFlag
 cd CookTheFlag
