@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3 class="mb-4">{{ path }}</h3>
+<div class="d-flex mb-2">
+    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload</button>
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <form method="post" action="/files/upload?path={{path}}" enctype="multipart/form-data" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="uploadModalLabel">Upload files</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                        <input class="form-control" type="file" id="formFileMultiple" name="files" multiple>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="list-group">
+    <a href="?path={{path}}/.." class="list-group-item list-group-item-action">
+        <img src="/static/assets/icons/folder.svg" />
+        ..
+    </a>
+    {% for folder in folders %}
+    <a href="?path={{path}}/{{folder}}" class="list-group-item list-group-item-action d-flex justify-content-between">
+        <div class="d-flex gap-2">
+            <img src="/static/assets/icons/folder.svg" />
+            {{folder}}
+        </div>
+        <form method="post" action="/files/delete?path={{path}}/{{folder}}" class="d-flex align-items-center">
+            <button class="btn btn-link p-0 d-flex align-items-center">
+                <img src="/static/assets/icons/trash.svg">
+            </button>
+        </form>
+    </a>
+    {% endfor %}
+    {% for file in files %}
+    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between">
+        <div class="d-flex gap-2">
+            <img src="/static/assets/icons/file.svg" />
+            {{file}}
+        </div>
+        <form method="post" action="/files/delete?path={{path}}/{{file}}" class="d-flex align-items-center">
+            <button class="btn btn-link p-0 d-flex align-items-center">
+                <img src="/static/assets/icons/trash.svg">
+            </button>
+        </form>
+    </a>
+    {% endfor %}
+    {% for downloadable in downloadables %}
+    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between">
+        <div class="d-flex gap-2 text-nowrap">
+            <img src="/static/assets/icons/download.svg" />
+            {{downloadable}}
+        </div>
+        <form method="post" action="/files/download?path={{path}}/{{downloadable}}" class="d-flex align-items-center">
+            <button class="btn btn-link p-0 d-flex align-items-center">
+                <img src="/static/assets/icons/download.svg">
+            </button>
+        </form>
+    </a>
+    {% endfor %}
+</div>
+{% if not exists %}
+<span>File doesnt exists</h2>
+    {% endif %}
+    {% endblock %}
