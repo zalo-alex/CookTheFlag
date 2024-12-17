@@ -40,7 +40,7 @@
         {% if item.element_type == "input" %}
             <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
             {% if item.textarea %}
-            <textarea class="form-control" id="{{ item.id }}" rows="3" placeholder="{{ item.placeholder }}"
+            <textarea class="form-control" id="{{ item.id }}" rows="12" placeholder="{{ item.placeholder }}"
                 name="{{ item.id }}">{{ args.get(item.id, item.value) }}</textarea>
             {% else %}
             <input type="{{ item.type }}" value="{{ args.get(item.id, item.value) }}" name="{{ item.id }}"
@@ -57,7 +57,7 @@
             <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
             <select name="{{ item.id }}" id="{{ item.id }}" class="form-select">
                 {% for option in item.options %}
-                    <option value="{{ option[1] }}">{{ option[0] }}</option>
+                    <option value="{{ item.options[option] if item.options is mapping else option }}">{{ option }}</option>
                 {% endfor %}
             </select>
 
