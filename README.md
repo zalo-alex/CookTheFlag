@@ -30,7 +30,7 @@ docker run --pull=always --volume ~/.cooktheflag:/data -p 8080:8080 azalo/cookth
 git clone https://github.com/zalo-alex/CookTheFlag
 cd CookTheFlag
 sudo docker build -t cooktheflag .
-sudo docker run -p 8080:8080 cooktheflag
+sudo docker run --volume ~/.cooktheflag:/data -p 8080:8080 cooktheflag
 ```
 
 ### Using Python
