@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3 class="mb-4">{{ path }}</h3>
+<div class="list-group mb-3">
+    <a href="?path={{path}}/.." class="list-group-item list-group-item-action">
+        <img src="/static/assets/icons/folder.svg" />
+        ..
+    </a>
+    <span class="list-group-item list-group-item-action">
+        Filename: {{ filename }}
+    </span>
+    <span class="list-group-item list-group-item-action">
+        Lines: {{ lines }}
+    </span>
+</div>
+<div class="mb-3">
+    <label for="filePreview" class="form-label">File preview</label>
+    <textarea class="form-control" id="filePreview" rows="12" readonly>{{ preview }}</textarea>
+</div>
+{% endblock %}

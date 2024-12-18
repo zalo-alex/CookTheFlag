@@ -73,3 +73,12 @@ class Files:
             shutil.rmtree(path)
         else:
             os.remove(path)
+    
+    def is_dir(self, path):
+        return os.path.isdir(self.get_absolute_path(path))
+    
+    def open(self, path):
+        return open(self.get_absolute_path(path))
+    
+    def basename(self, path):
+        return os.path.basename(path)

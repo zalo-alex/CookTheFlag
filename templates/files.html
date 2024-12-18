@@ -44,7 +44,7 @@
     </a>
     {% endfor %}
     {% for file in files %}
-    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between">
+    <a href="?path={{path}}/{{file}}" class="list-group-item list-group-item-action d-flex justify-content-between">
         <div class="d-flex gap-2 text-nowrap">
             <img src="/static/assets/icons/file.svg" />
             {{file}}

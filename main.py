@@ -32,10 +32,18 @@ def files_view():
     if not files.exists(path):
         return render_template("files.html", path=path, folders=[], files=[], downloadables=[], modules=manager.modules, categories=manager.categories, exists=False)
     
-    folders, _files = files.list_dir(path)
-    # downloadables = files.get_downloadables(path) TODO: Implement downloadables feature
-    
-    return render_template("files.html", path=path, folders=folders, files=_files, downloadables=[], modules=manager.modules, categories=manager.categories, exists=True)
+    if files.is_dir(path):
+        folders, _files = files.list_dir(path)
+        # downloadables = files.get_downloadables(path) TODO: Implement downloadables feature
+        
+        return render_template("files.html", path=path, folders=folders, files=_files, downloadables=[], modules=manager.modules, categories=manager.categories, exists=True)
+    else:
+        file = files.open(path)
+        lines = len(file.readlines())
+        file.seek(0)
+        preview = files.open(path).read(2048)
+
+        return render_template("file.html", path=path, lines=lines, filename=files.basename(path), modules=manager.modules, preview=preview, categories=manager.categories)
 
 @app.route("/files/upload", methods=["POST"])
 def files_upload():    
