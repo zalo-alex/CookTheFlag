@@ -1,7 +1,7 @@
 let form = undefined
 let resetButton = () => {}
 const ws = new WebSocket("ws://" + location.host + "/ws")
-let autoToggled = false
+let autoToggled = true
 
 function handleResponseData(data) {
     for (const [id, value] of Object.entries(data)) {
