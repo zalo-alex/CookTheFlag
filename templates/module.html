@@ -3,15 +3,15 @@
 {% block head %}
 <script src="/static/module.js"></script>
 {% if module.script %}
-    <script>
-        const isClientSide = true;
-        const clientSideFunction = new Function(`
+<script>
+    const isClientSide = true;
+    const clientSideFunction = new Function(`
             const type = arguments[0];
             const data = arguments[1];
             {{ module.script | safe }}
         `)
-        const parsers = {};
-    </script>
+    const parsers = {};
+</script>
 {% endif %}
 {% endblock %}
 
@@ -20,9 +20,9 @@
 <form id="form" class="d-flex flex-column gap-3">
     {% for item in module.layout %}
 
-    {% if module.script and item.parser %} 
-        <script>
-            parsers["{{ item.id }}"] = new Function(`
+    {% if module.script and item.parser %}
+    <script>
+        parsers["{{ item.id }}"] = new Function(`
                 var data = arguments[0];
                 var options = {};
                 
@@ -33,7 +33,7 @@
 
                 return data
             `)
-        </script>
+    </script>
     {% endif %}
 
     <div class="{{ item.element_type }}" id="container-{{ item.id }}">
@@ -41,23 +41,36 @@
             <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
             {% if item.textarea %}
             <textarea class="form-control" id="{{ item.id }}" rows="12" placeholder="{{ item.placeholder }}"
-                name="{{ item.id }}">{{ args.get(item.id, item.value) }}</textarea>
+                name="{{ item.id }}" oninput="auto()">{{ args.get(item.id, item.value) }}</textarea>
             {% else %}
             <input type="{{ item.type }}" value="{{ args.get(item.id, item.value) }}" name="{{ item.id }}"
-                class="form-control" id="{{ item.id }}" placeholder="{{ item.placeholder }}">
+                class="form-control" id="{{ item.id }}" placeholder="{{ item.placeholder }}" oninput="auto()">
             {% endif %}
-        
+
         {% elif item.element_type == "submit" %}
             <div class="d-flex flex-column gap-3">
-                <button class="btn btn-primary" name="submit" value="{{ item.id }}" type="submit">{{ item.name }}</button>
+                <div class="d-flex gap-3 align-items-center">
+                    <button class="btn btn-primary w-100" name="submit" value="{{ item.id }}" type="submit" id="{{ item.id }}">{{ item.name }}</button>
+                    {% if item.auto and module.script %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="auto-{{ item.id }}" oninput="autoToggled = event.target.checked">
+                        <label class="form-check-label text-nowrap" for="auto-{{ item.id }}">Auto</label>
+                    </div>  
+                    <script>
+                        let autoButton = document.getElementById("{{ item.id }}")
+                    </script>
+                    {% elif item.auto and not module.script %}
+                        <span class="figure-caption text-nowrap text-danger">Cannot use Auto with server side</span>
+                    {% endif %}                        
+                </div>
                 <div class="alert alert-danger d-none" role="alert" id="{{ item.id }}-error"></div>
             </div>
-        
+
         {% elif item.element_type == "select" %}
             <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
             <select name="{{ item.id }}" id="{{ item.id }}" class="form-select">
                 {% for option in item.options %}
-                    <option value="{{ item.options[option] if item.options is mapping else option }}">{{ option }}</option>
+                <option value="{{ item.options[option] if item.options is mapping else option }}">{{ option }}</option>
                 {% endfor %}
             </select>
 
@@ -66,18 +79,19 @@
             <div id="{{ item.id }}" class="d-flex flex-column gap-2">
                 <script>addKeyValueRow("{{ item.id }}")</script>
             </div>
-            <button class="btn btn-primary mt-2" type="button" value="{{ item.id }}" onclick="addKeyValueRow('{{ item.id }}')">+</button>
+            <button class="btn btn-primary mt-2" type="button" value="{{ item.id }}"
+                onclick="addKeyValueRow('{{ item.id }}')">+</button>
 
         {% elif item.element_type == "checkbox" %}
             <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
-            <input type="checkbox" name="{{ item.id }}"
-                class="form-check-input" id="{{ item.id }}">
+            <input type="checkbox" name="{{ item.id }}" class="form-check-input" id="{{ item.id }}">
 
         {% else %}
-            <p>{{ item.element_type }}</p>
+        <p>{{ item.element_type }}</p>
         {% endif %}
     </div>
     {% endfor %}
 </form>
-<span class="figure-caption text-end mt-5 d-block">{{ module.name }} ({{ module.url }}) | {{ module.category }} | {{ "Client side" if module.script else "Server side" }}</span>
+<span class="figure-caption text-end mt-5 d-block">{{ module.name }} ({{ module.url }}) | {{ module.category }} | {{
+    "Client side" if module.script else "Server side" }}</span>
 {% endblock %}

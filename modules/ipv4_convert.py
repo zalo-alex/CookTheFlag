@@ -7,7 +7,7 @@ class CustomModule(Module):
     category = "encoding"
     layout = [
         Input("IPv4 Input", "input", regex=Regexs.IPV4),
-        Submit("Submit", "encode"),
+        Submit("Submit", "encode", auto=True),
         Input("Binary Output", "bin-output"),
         Input("Hex Output", "hex-output"),
     ]

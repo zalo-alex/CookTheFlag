@@ -8,7 +8,7 @@ class CustomModule(Module):
     category = "encoding"
     layout = [
         Input("Binary Input", "input", textarea=True, regex=Regexs.BIN, parser=BinaryParser()),
-        Submit("Submit", "encode"),
+        Submit("Submit", "encode", auto=True),
         Input("Decimal Output", "output", textarea=True),
     ]
     script = """

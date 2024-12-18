@@ -6,7 +6,7 @@ class CustomModule(Module):
     category = "encoding"
     layout = [
         Input("ASCII Input", "input", textarea=True),
-        Submit("Submit", "encode"),
+        Submit("Submit", "encode", auto=True),
         Input("Binary Output", "output", textarea=True),
     ]
     script = """

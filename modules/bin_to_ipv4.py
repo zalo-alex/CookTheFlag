@@ -6,7 +6,7 @@ class CustomModule(Module):
     category = "encoding"
     layout = [
         Input("IPv4 Binary Input", "input"),
-        Submit("Submit", "encode"),
+        Submit("Submit", "encode", auto=True),
         Input("IPv4 Decimal Output", "output")
     ]
     script = """

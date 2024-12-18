@@ -1,6 +1,7 @@
 let form = undefined
 let resetButton = () => {}
 const ws = new WebSocket("ws://" + location.host + "/ws")
+let autoToggled = false
 
 function handleResponseData(data) {
     for (const [id, value] of Object.entries(data)) {
@@ -118,4 +119,12 @@ function addKeyValueRow(id, key = "", value = "") {
 
 function deleteKeyValueRow(id) {
     document.getElementById(id).remove()
+}
+
+function auto() {
+    if (typeof autoButton == "undefined" || !autoToggled) {
+        return
+    }
+
+    autoButton.click()
 }

@@ -7,7 +7,7 @@ class CustomModule(Module):
     category = "encoding"
     layout = [
         Input("Base64 Input", "input", textarea=True, regex=Regexs.BASE64),
-        Submit("Submit", "encode"),
+        Submit("Submit", "encode", auto=True),
         Input("Text Output", "output", textarea=True),
     ]
     script = """return {

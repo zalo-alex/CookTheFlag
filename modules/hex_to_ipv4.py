@@ -7,7 +7,7 @@ class CustomModule(Module):
     category = "encoding"
     layout = [
         Input("IPv4 Hex Input", "input", regex=Regexs.IPV4_HEX),
-        Submit("Submit", "encode"),
+        Submit("Submit", "encode", auto=True),
         Input("IPv4 Decimal Output", "output")
     ]
     script = """
