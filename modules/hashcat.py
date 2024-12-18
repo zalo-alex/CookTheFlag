@@ -1,6 +1,6 @@
 from src.module import Module
 from src.layout import *
-from src.regexs import Regexs
+from src.parsers import PathParser
 from src.exec import Exec
 
 class CustomModule(Module):
@@ -12,7 +12,7 @@ class CustomModule(Module):
             "MD5": "0",
             "SHA1": "100",
         }),
-        Input("Wordlist", "wordlist"),
+        Input("Wordlist", "wordlist", parser=PathParser()),
         Submit("Crack", "crack"),
         Input("Command", "command"),
         Input("Result", "result"),

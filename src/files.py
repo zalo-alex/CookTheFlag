@@ -1,6 +1,7 @@
 import os
 import shutil
-from pathlib import Path
+
+from src.globals import data_dir
 
 class DownloadableFile:
     
@@ -16,11 +17,10 @@ class Files:
     }
 
     def __init__(self):
-        self.data_dir = "/data" if os.getenv("DOCKER") else os.path.join(Path.home(), ".cooktheflag")
-        self.init_folders(self.data_dir, self.structure)
+        self.init_folders(data_dir, self.structure)
 
     def get_absolute_path(self, path):
-        return os.path.join(self.data_dir, self.get_path(path))
+        return os.path.join(data_dir, self.get_path(path))
     
     def get_path(self, path):
         return os.path.relpath(os.path.normpath(os.path.join("/", path)), "/")

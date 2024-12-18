@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import os
+
 class Action:
     def __init__(self, name, options, process, script=None):
         self.name = name
@@ -65,5 +67,18 @@ class ActionDummy:
         return Action(
             "path", 
             {},
+            process
+        )
+    
+    @action_wrapper
+    def join_path_before(self, path) -> ActionDummy:
+        def process(data, options):
+            return os.path.join(options["path"], data)
+        
+        return Action(
+            "join_path_before", 
+            {
+                "path": path
+            },
             process
         )
