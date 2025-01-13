@@ -34,7 +34,7 @@
                 <li class="mb-1">
                     <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 {{ '' if is_category else 'collapsed' }}"
                         data-bs-toggle="collapse" data-bs-target="#{{ category }}-collapse" aria-expanded="{{ 'true' if is_category else 'false' }}">
-                        {{ category | capitalize }}
+                        {{ category | replace("-", " ") | title }}
                     </button>
                     <div class="collapse {{ 'show' if is_category else '' }}" id="{{ category }}-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
