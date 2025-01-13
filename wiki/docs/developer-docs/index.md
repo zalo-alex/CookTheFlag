@@ -1,4 +1,4 @@
-# :hand_splayed: Getting started
+# :sunrise: Getting started
 
  - [:open_file_folder: File Structure](./file-structure.md)
  - [:heavy_plus_sign: Modules](./modules.md)

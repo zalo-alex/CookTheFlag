@@ -13,6 +13,10 @@ Cook The Flag is a web-based CTF tool that lets you easily extend its functional
  - [ ] ➕ More tools (RsaCtfTool, ...)
  - [ ] 🔧 More conversions (Rot13, ...)
  - [ ] 🌐 Remote access 
+
+## 📘 Wiki
+[Link](https://zalo-alex.github.io/CookTheFlag/)
+
 ## 🚀 Usage
 ```bash
 curl -s https://raw.githubusercontent.com/zalo-alex/CookTheFlag/refs/heads/main/run.sh | bash
