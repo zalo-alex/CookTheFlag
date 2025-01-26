@@ -1,17 +1,26 @@
 from pathlib import Path
-import os
-import traceback
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 from flask_sock import Sock
+from flask_migrate import Migrate
 from types import GeneratorType
 
 from src.module_manage import ModuleManage
 from src.files import Files
+from src.models import db, User
 
 import base64
 import json
+import os
+import traceback
 
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///db.sqlite' # TODO: Should use the volume for docker !
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config['SECRET_KEY'] = os.urandom(24)
+
+db.init_app(app)
+migrate = Migrate(app, db)
+
 sock = Sock(app)
 
 manager = ModuleManage()
@@ -90,6 +99,35 @@ def regex(b64_query):
     return {
         "matches": matches
     }
+
+@app.route("/admin")
+def admin():
+    # TODO: IMPORTANT CHECK FOR PERMISSIONS
+    users = User.query.all()
+    return render_template("admin.html", modules=manager.modules, categories=manager.categories, users=users)
+
+@app.route("/admin/user/create", methods=["POST"])
+def admin_user_create():
+    # TODO: IMPORTANT CHECK FOR PERMISSIONS
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    if not username or not password:
+        flash("Username and password are required.", "danger")
+        return redirect("/admin")
+
+    if User.query.filter_by(username=username).first():
+        flash("Username already exists.", "danger")
+        return redirect("/admin")
+
+    user = User(username=username)
+    user.set_password(password)
+
+    db.session.add(user)
+    db.session.commit()
+
+    flash("User registered successfully.", "info")
+    return redirect("/admin")
 
 @sock.route('/ws')
 def ws(sock):

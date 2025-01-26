@@ -42,7 +42,7 @@ sudo docker run --volume ~/.cooktheflag:/data -p 8080:8080 cooktheflag
 git clone https://github.com/zalo-alex/CookTheFlag
 cd CookTheFlag
 pip install -r requirements.txt
-python main.py
+python app.py
 ```
 </details>
 
