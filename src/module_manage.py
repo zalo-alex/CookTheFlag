@@ -1,6 +1,8 @@
 import base64
 import re
-from flask import render_template, request
+from flask import render_template, request, flash, redirect
+
+from src.auth import is_logged
 
 import glob
 import os
@@ -27,6 +29,10 @@ class ModuleManage:
             for key, value in request.args.items():
                 decoded_args[key] = base64.b64decode(value).decode('latin-1')
             
+            if not module.script and not is_logged():
+                flash("You need to be logged-in to use Server side modules", "info")
+                return redirect("/login")
+
             return render_template("module.html", module=module, modules=self.modules, categories=self.categories, args=decoded_args)
         
         return get

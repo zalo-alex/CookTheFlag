@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<h3 class="mb-4">Login</h3>
+<form action="/login" method="POST">
+    <div class="mb-3">
+        <label for="usernameInput" class="form-label">User</label>
+        <input class="form-control" id="usernameInput" name="username">
+    </div>
+    <div class="mb-3">
+        <label for="passwordInput" class="form-label">Password</label>
+        <input class="form-control" type="password" id="passwordInput" name="password">
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+{% endblock %}
