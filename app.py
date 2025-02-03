@@ -8,6 +8,7 @@ from src.module_manage import ModuleManage
 from src.files import Files
 from src.models import db, User
 from src.auth import is_logged, auth_route, set_user_session
+from src.globals import data_dir
 
 import base64
 import json
@@ -17,7 +18,7 @@ import string
 import random
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///db.sqlite' # TODO: Should use the volume for docker !
+app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{os.path.join(data_dir, "db.sqlite")}'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config['SECRET_KEY'] = os.urandom(24)
 
