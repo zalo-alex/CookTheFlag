@@ -1,4 +1,4 @@
-from flask import session
+from flask import session, redirect
 
 def is_logged():
     return bool(session.get("user"))
@@ -6,9 +6,7 @@ def is_logged():
 def auth_route(func):
     def wrapper(*args, **kwargs):
         if not is_logged():
-            return {
-                "error": "Unauthorized"
-            }, 401
+            return redirect("/login")
         
         return func(*args, **kwargs)
     

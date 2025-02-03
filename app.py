@@ -57,6 +57,7 @@ def index():
     return render_template("index.html", modules=manager.modules, categories=manager.categories)
 
 @app.route("/files")
+@auth_route
 def files_view():
     path = files.get_path(request.args.get("path", ".")) 
 
@@ -77,6 +78,7 @@ def files_view():
         return render_template("file.html", path=path, lines=lines, filename=files.basename(path), modules=manager.modules, preview=preview, categories=manager.categories)
 
 @app.route("/files/upload", methods=["POST"])
+@auth_route
 def files_upload():    
     path = files.get_path(request.args.get("path", "."))
 
@@ -91,6 +93,7 @@ def files_upload():
     return redirect(f"/files?path={request.args.get('path', '.')}")
 
 @app.route("/files/delete", methods=["POST"])
+@auth_route
 def files_delete():    
     path = files.get_path(request.args.get("path", "."))
 
