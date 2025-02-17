@@ -31,22 +31,16 @@ manager = ModuleManage()
 files = Files()
 
 def init_cook_user():
-    charset = string.ascii_uppercase + string.digits
-    password = f"{''.join(random.choices(charset, k=3))}-{''.join(random.choices(charset, k=4))}"
-
     with app.app_context():
         cook_user = User.query.filter_by(username="cook").one_or_none()
         if cook_user:
-            db.session.delete(cook_user)
-            db.session.commit()
+            return
         
         cook_user = User(username="cook")
-        cook_user.set_password(password)
+        cook_user.set_password("cook")
 
         db.session.add(cook_user)
         db.session.commit()
-
-    print(f" ! Temp Cook Account: cook:{password}")
 
 @app.errorhandler(404) 
 def not_found(e): 
@@ -230,7 +224,9 @@ def ws(sock):
                 traceback.print_exc()
                 return {"__error": str(e)}
 
-if __name__ == "__main__":
+if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
     manager.import_all(app)
     init_cook_user()
+
+if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)

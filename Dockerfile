@@ -19,4 +19,4 @@ ENV DOCKER=1
 
 EXPOSE 8080
 
-CMD ["python", "app.py"]
+ENTRYPOINT ["/app/entrypoint.sh"]
