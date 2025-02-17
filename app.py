@@ -38,6 +38,7 @@ def init_cook_user():
         
         cook_user = User(username="cook")
         cook_user.set_password("cook")
+        cook_user.change_password = True
 
         db.session.add(cook_user)
         db.session.commit()
@@ -168,12 +169,48 @@ def login():
         if not user.check_password(password):
             flash("Invalid password.", "danger")
             return redirect("/login")
+        
+        if user.change_password:
+            return redirect(f"/change-password/{user.username}")
 
         set_user_session(user)
         flash(f"Logged as {user.username}", "info")
-        return redirect("/login")
+        return redirect("/admin")
 
     return render_template("login.html", modules=manager.modules, categories=manager.categories)
+
+@app.route("/change-password/<username>", methods=["GET", "POST"])
+def change_password_username(username):
+    user = User.query.filter_by(username=username).one_or_none()
+    if not user:
+        flash(f'Username "{username}" not found.', "danger")
+        return render_template("change-password.html", modules=manager.modules, categories=manager.categories, username=username)
+
+    if request.method == "POST":
+
+        old_password = request.form.get("oldPassword")
+        new_password = request.form.get("newPassword")
+        confirm_password = request.form.get("confirmPassword")
+
+        if not old_password or not new_password or not confirm_password:
+            flash("All fields are required.", "danger")
+            return redirect(f"/change-password/{username}")
+        
+        if new_password != confirm_password:
+            flash("Passwords do not match.", "danger")
+            return redirect(f"/change-password/{username}")
+        
+        if user.check_password(old_password):
+            flash("Password changed successfully.", "info")
+            user.set_password(new_password)
+            user.change_password = False
+            db.session.commit()
+            return redirect(f"/login")
+        else:
+            flash("Invalid old password.", "danger")
+            return redirect(f"/change-password/{username}")
+    
+    return render_template("change-password.html", modules=manager.modules, categories=manager.categories, username=username)
 
 @sock.route('/ws')
 def ws(sock):
