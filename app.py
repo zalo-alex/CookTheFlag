@@ -224,7 +224,7 @@ def ws(sock):
                 traceback.print_exc()
                 return {"__error": str(e)}
 
-if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+if not os.environ.get("FLASK_DB_MIGRATION"):
     manager.import_all(app)
     init_cook_user()
 
