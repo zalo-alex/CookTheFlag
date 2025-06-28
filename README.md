@@ -21,6 +21,9 @@ Cook The Flag is a web-based CTF tool that lets you easily extend its functional
 ```bash
 curl -s https://raw.githubusercontent.com/zalo-alex/CookTheFlag/refs/heads/main/run.sh | bash
 ```
+
+> Default password: `cook:cook`
+
 <details>
 <summary>Other methods (Latest updates)</summary>
 
