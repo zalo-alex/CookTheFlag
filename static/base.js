@@ -7,9 +7,9 @@ function search() {
     for (const link of links) {
         const title = link.textContent.toLowerCase().replaceAll(" ", "").replaceAll("-", "").replaceAll(".", "").replaceAll("_", "")
         if (title.includes(query)) {
-            link.classList.remove("d-none")
+            link.parentElement.classList.remove("d-none")
         } else {
-            link.classList.add("d-none")
+            link.parentElement.classList.add("d-none")
         }
     }
 
