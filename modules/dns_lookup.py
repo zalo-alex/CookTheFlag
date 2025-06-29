@@ -1,9 +1,9 @@
 from src.module import Module
 from src.layout import *
 from src.regexs import Regexs
+from src.exec import Exec
 
 import json
-import whois
 import dns.resolver
 
 class CustomModule(Module):
@@ -12,7 +12,7 @@ class CustomModule(Module):
     layout = [
         Input("Domain name", "dn-input", regex=Regexs.DOMAIN),
         Submit("Lookup", "lookup"),
-        Input("DNS Lookup", "lookup-output", textarea=True),
+        Input("WHOIS", "whois-output", textarea=True),
         Input("DNS Records", "records-output", textarea=True),
     ]
     
@@ -25,12 +25,14 @@ class CustomModule(Module):
                 answers = dns.resolver.resolve(domain, record_type)
                 all_records[record_type] = [answer.to_text() for answer in answers]
             except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN, dns.exception.DNSException) as e:
-                all_records[record_type] = f"Error: {str(e)}"
+                all_records[record_type] = [f"Error: {str(e)}"]
+            all_records[record_type] = "\n".join([ " - " + record for record in all_records[record_type] ])
 
-        return all_records
+        return "\n\n".join([f"{record[0]}:\n{record[1]}" for record in all_records.items()])
     
     def submit(type, data):
-        return {
-            "lookup-output": str(whois.whois(data["dn-input"])),
-            "records-output": json.dumps(CustomModule.get_all_dns_records(data["dn-input"]), indent=4),
+        yield {
+            "records-output": CustomModule.get_all_dns_records(data["dn-input"]),
         }
+    
+        yield from Exec(["whois", data["dn-input"]]).stream_output("whois-output")

@@ -11,3 +11,9 @@ class Exec:
         for stdout_line in iter(process.stdout.readline, b''):
             total += stdout_line
             yield total.decode("latin-1")
+    
+    def stream_output(self, id):
+        for line in self.run():
+            yield {
+                id: line
+            }
