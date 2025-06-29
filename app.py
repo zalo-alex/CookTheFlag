@@ -66,9 +66,13 @@ def files_view():
         return render_template("files.html", path=path, folders=folders, files=_files, downloadables=[], modules=manager.modules, categories=manager.categories, exists=True)
     else:
         file = files.open(path)
-        lines = len(file.readlines())
-        file.seek(0)
-        preview = files.open(path).read(2048)
+        try:
+            lines = len(file.readlines())
+            file.seek(0)
+            preview = files.open(path).read(2048)
+        except:
+            lines = 0
+            preview = "Cannot read file"
 
         return render_template("file.html", path=path, lines=lines, filename=files.basename(path), modules=manager.modules, preview=preview, categories=manager.categories)
 
