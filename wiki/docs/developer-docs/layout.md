@@ -26,7 +26,7 @@ This element is a `<input>` in HTML.
 `parser`
 > More infos [:paintbrush: Parsers](./parsers.md)
 
-## Submit
+## Button
 
 ``` python linenums="1"
 Button(name, id, auto=False)
@@ -41,6 +41,6 @@ The button to submit the data
 > The type in the submit function
 
 `auto`
-> Only for client side, will execute submit every an input is modified
+> Only for client side, will execute submit everytime an input is modified
 
 !!! warning "Page is currently in work in progress"
