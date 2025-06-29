@@ -45,6 +45,7 @@ sudo docker run --volume ~/.cooktheflag:/data -p 8080:8080 cooktheflag
 git clone https://github.com/zalo-alex/CookTheFlag
 cd CookTheFlag
 pip install -r requirements.txt
+FLASK_DB_MIGRATION=1 flask db upgrade
 python app.py
 ```
 </details>
