@@ -1,6 +1,6 @@
 import base64
 import re
-from flask import render_template, request, flash, redirect
+from flask import render_template, request, flash, redirect, url_for
 
 from src.auth import is_logged
 
@@ -31,7 +31,7 @@ class ModuleManage:
             
             if not module.script and not is_logged():
                 flash("You need to be logged-in to use Server side modules", "info")
-                return redirect("/login")
+                return redirect(url_for("login", next=request.path))
 
             return render_template("module.html", module=module, modules=self.modules, categories=self.categories, args=decoded_args)
         

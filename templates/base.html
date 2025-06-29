@@ -46,7 +46,7 @@
                     </button>
                     <div class="collapse {{ 'show' if is_category else '' }}" id="{{ category }}-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            {% for module in categories[category] %}
+                            {% for module in categories[category]|sort %}
                                 <li class="d-flex align-items-center">
                                     {% if modules[module].script %}
                                         <img src="/static/assets/icons/device.svg" height="20px" width="20px">
