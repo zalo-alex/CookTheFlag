@@ -2,9 +2,11 @@ let form = undefined
 let resetButton = () => {}
 const ws = new WebSocket("ws://" + location.host + "/ws")
 let autoToggled = true
+let errorAlert = undefined;
 
 function handleResponseData(data) {
     for (const [id, value] of Object.entries(data)) {
+        if (id == "__error") continue
         document.getElementById(id).value = value
     }
 
@@ -37,7 +39,7 @@ window.addEventListener("load", () => {
         const text = e.submitter.textContent
         e.submitter.textContent = "..."
 
-        const errorAlert = document.getElementById(`${type}-error`)
+        errorAlert = document.getElementById(`${type}-error`)
         errorAlert.classList.add("d-none")
 
         resetButton = () => {
