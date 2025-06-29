@@ -12,6 +12,7 @@ function handleResponseData(data) {
 
     if (data.__error) {
         resetButton()
+        // errorAlert should be set in the form submit event handler
         errorAlert.textContent = data.__error
         errorAlert.classList.remove("d-none")
         return
@@ -70,6 +71,7 @@ window.addEventListener("load", () => {
             resetButton()
         } else {
             await executeServerSide(type, data)
+            // handleResponseData is done in the websocket message handler
         }
     })
 })
