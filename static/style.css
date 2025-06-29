@@ -40,6 +40,9 @@ html {
 .btn-toggle-nav a {
     padding: .1875rem .5rem;
     margin-top: .125rem;
+}
+
+.btn-toggle-nav img {
     margin-left: 1.25rem;
 }
 
