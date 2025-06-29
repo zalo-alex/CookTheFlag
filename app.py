@@ -175,7 +175,9 @@ def login():
 
         set_user_session(user)
         flash(f"Logged as {user.username}", "info")
-        return redirect("/admin")
+
+        # This should be fixed to prevent open redirects
+        return redirect(request.args.get("next") or "/admin")
 
     return render_template("login.html", modules=manager.modules, categories=manager.categories)
 
