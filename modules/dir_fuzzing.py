@@ -9,7 +9,7 @@ class CustomModule(Module):
     category = "tool"
     layout = [
         Input("Target URL", "url", regex=Regexs.URL),
-        Input("Wordlist", "wordlist", parser=PathParser()),
+        FileInput("Wordlist", "wordlist"),
         Submit("Fuzz", "fuzz"),
         Input("Result", "output", textarea=True),
     ]

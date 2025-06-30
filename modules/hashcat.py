@@ -12,7 +12,7 @@ class CustomModule(Module):
             "MD5": "0",
             "SHA1": "100",
         }),
-        Input("Wordlist", "wordlist", parser=PathParser()),
+        FileInput("Wordlist", "wordlist"),
         Submit("Crack", "crack"),
         Input("Command", "command"),
         Input("Result", "result"),
