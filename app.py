@@ -9,6 +9,7 @@ from src.files import Files
 from src.models import db, User
 from src.auth import is_logged, auth_route, set_user_session
 from src.globals import data_dir
+from src.api import api
 
 import base64
 import json
@@ -21,6 +22,8 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{os.path.join(data_dir, "db.sqlite")}'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config['SECRET_KEY'] = os.urandom(24)
+
+app.register_blueprint(api)
 
 db.init_app(app)
 migrate = Migrate(app, db)

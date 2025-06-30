@@ -2,6 +2,7 @@
 
 {% block head %}
 <script src="/static/module.js"></script>
+<script src="/static/fileInput.js"></script>
 {% if module.script %}
 <script>
     const isClientSide = true;
@@ -86,8 +87,18 @@
             <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
             <input type="checkbox" name="{{ item.id }}" class="form-check-input" id="{{ item.id }}">
 
+        {% elif item.element_type == "file_input" %}
+            <label for="{{ item.id }}" class="form-label">{{ item.name }}</label>
+            <input onfocus="onFileInputFocus('{{ item.id }}')" readonly type="text" name="{{ item.id }}" class="form-control" id="{{ item.id }}">
+            <div class="card explorer d-none position-absolute mt-2">
+                <ul class="list-group list-group-flush">
+                    
+                </ul>
+            </div>
+        
         {% else %}
-        <p>{{ item.element_type }}</p>
+            <p>{{ item.element_type }}</p>
+
         {% endif %}
     </div>
     {% endfor %}
