@@ -33,12 +33,12 @@
     {% for folder in folders %}
     <a href="?path={{path}}/{{folder}}" class="list-group-item list-group-item-action d-flex justify-content-between">
         <div class="d-flex gap-2 text-nowrap">
-            <img src="/static/assets/icons/folder.svg" />
+            <img width="20" height="20" src="/static/assets/icons/folder.svg" />
             {{folder}}
         </div>
         <form method="post" action="/files/delete?path={{path}}/{{folder}}" class="d-flex align-items-center">
             <button class="btn btn-link p-0 d-flex align-items-center">
-                <img src="/static/assets/icons/trash.svg">
+                <img width="20" height="20" src="/static/assets/icons/trash.svg">
             </button>
         </form>
     </a>
@@ -46,12 +46,12 @@
     {% for file in files %}
     <a href="?path={{path}}/{{file}}" class="list-group-item list-group-item-action d-flex justify-content-between">
         <div class="d-flex gap-2 text-nowrap">
-            <img src="/static/assets/icons/file.svg" />
+            <img width="20" height="20" src="/static/assets/icons/file.svg" />
             {{file}}
         </div>
         <form method="post" action="/files/delete?path={{path}}/{{file}}" class="d-flex align-items-center">
             <button class="btn btn-link p-0 d-flex align-items-center">
-                <img src="/static/assets/icons/trash.svg">
+                <img width="20" height="20" src="/static/assets/icons/trash.svg">
             </button>
         </form>
     </a>
