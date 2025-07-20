@@ -7,8 +7,8 @@
     <div class="list-group-item list-group-item-action d-flex justify-content-between">
         <div class="d-flex gap-2 text-nowrap align-items-center">
             <form method="post" action="/tasks/stop?id={{task.id}}" class="d-flex align-items-center">
-                <button class="btn btn-link p-2 d-flex align-items-center">
-                    <img src="/static/assets/icons/stop.svg">
+                <button class="btn btn-link p-2 d-flex align-items-center text-black">
+                    {{ icons.stop() }}
                 </button>
             </form>
             {{ task.name }}

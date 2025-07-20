@@ -3,9 +3,9 @@ function createFileElement(explorer, name, type) {
     element.className = "explorer_file list-group-item list-group-item-action d-flex align-items-center gap-2"
     element.setAttribute("name", name)
     if (type == "folder") {
-        element.innerHTML = `<img src="/static/assets/icons/folder.svg" />${name}`
+        element.innerHTML = `<svg width="20" height="20"><use href="#folder-icon"/></svg>${name}`
     } else {
-        element.innerHTML = `<img src="/static/assets/icons/file.svg" />${name}`
+        element.innerHTML = `<svg width="20" height="20"><use href="#file-icon"/></svg>${name}`
     }
     element.onclick = async () => {
         if (type == "folder") {

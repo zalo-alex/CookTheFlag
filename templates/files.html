@@ -27,18 +27,18 @@
 </div>
 <div class="list-group">
     <a href="?path={{path}}/.." class="list-group-item list-group-item-action">
-        <img src="/static/assets/icons/folder.svg" />
+        {{ icons.folder() }}
         ..
     </a>
     {% for folder in folders %}
     <a href="?path={{path}}/{{folder}}" class="list-group-item list-group-item-action d-flex justify-content-between">
         <div class="d-flex gap-2 text-nowrap">
-            <img width="20" height="20" src="/static/assets/icons/folder.svg" />
+            {{ icons.folder() }}
             {{folder}}
         </div>
         <form method="post" action="/files/delete?path={{path}}/{{folder}}" class="d-flex align-items-center">
-            <button class="btn btn-link p-0 d-flex align-items-center">
-                <img width="20" height="20" src="/static/assets/icons/trash.svg">
+            <button class="btn btn-link p-0 d-flex align-items-center text-black">
+                {{ icons.trash() }}
             </button>
         </form>
     </a>
@@ -46,12 +46,12 @@
     {% for file in files %}
     <a href="?path={{path}}/{{file}}" class="list-group-item list-group-item-action d-flex justify-content-between">
         <div class="d-flex gap-2 text-nowrap">
-            <img width="20" height="20" src="/static/assets/icons/file.svg" />
+            {{ icons.file() }}
             {{file}}
         </div>
         <form method="post" action="/files/delete?path={{path}}/{{file}}" class="d-flex align-items-center">
-            <button class="btn btn-link p-0 d-flex align-items-center">
-                <img width="20" height="20" src="/static/assets/icons/trash.svg">
+            <button class="btn btn-link p-0 d-flex align-items-center text-black">
+                {{ icons.trash() }}
             </button>
         </form>
     </a>
@@ -59,12 +59,12 @@
     {% for downloadable in downloadables %}
     <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between">
         <div class="d-flex gap-2 text-nowrap">
-            <img src="/static/assets/icons/download.svg" />
+            {{ icons.file() }}
             {{downloadable}}
         </div>
         <form method="post" action="/files/download?path={{path}}/{{downloadable}}" class="d-flex align-items-center">
             <button class="btn btn-link p-0 d-flex align-items-center">
-                <img src="/static/assets/icons/download.svg">
+                {{ icons.download() }}
             </button>
         </form>
     </a>
