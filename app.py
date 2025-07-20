@@ -10,6 +10,8 @@ from src.models import db, User
 from src.auth import is_logged, auth_route, set_user_session
 from src.globals import data_dir
 from src.api import api
+from src.tasks import Tasks
+from src.websocket import ws_clients
 
 import base64
 import json
@@ -45,14 +47,22 @@ def init_cook_user():
 
         db.session.add(cook_user)
         db.session.commit()
+    
+@app.context_processor
+def inject_globals():
+    return {
+        "modules": manager.modules, 
+        "categories": manager.categories,
+        "running_tasks": Tasks.amount()
+    }
 
 @app.errorhandler(404) 
 def not_found(e): 
-    return render_template("404.html", modules=manager.modules, categories=manager.categories) 
+    return render_template("404.html") 
 
 @app.route("/")
 def index():
-    return render_template("index.html", modules=manager.modules, categories=manager.categories)
+    return render_template("index.html")
 
 @app.route("/files")
 @auth_route
@@ -60,13 +70,13 @@ def files_view():
     path = files.get_path(request.args.get("path", ".")) 
 
     if not files.exists(path):
-        return render_template("files.html", path=path, folders=[], files=[], downloadables=[], modules=manager.modules, categories=manager.categories, exists=False)
+        return render_template("files.html", path=path, folders=[], files=[], downloadables=[], exists=False)
     
     if files.is_dir(path):
         folders, _files = files.list_dir(path)
         # downloadables = files.get_downloadables(path) TODO: Implement downloadables feature
         
-        return render_template("files.html", path=path, folders=folders, files=_files, downloadables=[], modules=manager.modules, categories=manager.categories, exists=True)
+        return render_template("files.html", path=path, folders=folders, files=_files, downloadables=[], exists=True)
     else:
         file = files.open(path)
         try:
@@ -131,7 +141,7 @@ def regex(b64_query):
 @auth_route
 def admin():
     users = User.query.all()
-    return render_template("admin.html", modules=manager.modules, categories=manager.categories, users=users)
+    return render_template("admin.html", users=users)
 
 @app.route("/admin/user/create", methods=["POST"])
 @auth_route
@@ -186,14 +196,14 @@ def login():
         # This should be fixed to prevent open redirects
         return redirect(request.args.get("next") or "/admin")
 
-    return render_template("login.html", modules=manager.modules, categories=manager.categories)
+    return render_template("login.html")
 
 @app.route("/change-password/<username>", methods=["GET", "POST"])
 def change_password_username(username):
     user = User.query.filter_by(username=username).one_or_none()
     if not user:
         flash(f'Username "{username}" not found.', "danger")
-        return render_template("change-password.html", modules=manager.modules, categories=manager.categories, username=username)
+        return render_template("change-password.html", username=username)
 
     if request.method == "POST":
 
@@ -219,13 +229,29 @@ def change_password_username(username):
             flash("Invalid old password.", "danger")
             return redirect(f"/change-password/{username}")
     
-    return render_template("change-password.html", modules=manager.modules, categories=manager.categories, username=username)
+    return render_template("change-password.html", username=username)
+
+@app.route("/tasks")
+@auth_route
+def tasks():
+    return render_template("tasks.html", tasks=Tasks.all)
+
+@app.route("/tasks/stop", methods=["POST"])
+@auth_route
+def tasks_stop():
+    task_id = request.args.get("id")
+    if not task_id or task_id not in Tasks.all:
+        return redirect("/tasks")
+    Tasks.stop(Tasks.all[task_id])
+    return redirect("/tasks")
 
 @sock.route('/ws')
-def ws(sock):
-    logged = is_logged()
+@auth_route
+def ws_route(ws):
+    ws_clients.append(ws)
+
     while True:
-        payload = json.loads(sock.receive())
+        payload = json.loads(ws.receive())
         type = payload.get("type")
         payload = payload.get("payload")
         
@@ -233,12 +259,6 @@ def ws(sock):
             continue
         
         if type == "submit":
-
-            if not logged:
-                sock.send(json.dumps({
-                    "type": "error", "data": "Unauthorized"
-                }))
-                continue
 
             module = payload.get("module")
             if not module or module not in manager.modules:
@@ -257,18 +277,20 @@ def ws(sock):
                 
                 if isinstance(res, GeneratorType):
                     for r in res:
-                        sock.send(json.dumps({
+                        ws.send(json.dumps({
                             "type": "response", "data": r
                         }))
-                    sock.send(json.dumps({"type": "done"}))
+                    ws.send(json.dumps({"type": "done"}))
                 else:
-                    sock.send(json.dumps({
+                    ws.send(json.dumps({
                         "type": "response", "data": res
                     }))
-                    sock.send(json.dumps({"type": "done"}))
+                    ws.send(json.dumps({"type": "done"}))
             except Exception as e:
                 traceback.print_exc()
-                return {"__error": str(e)}
+                ws.send(json.dumps({
+                    "type": "response", "data": {"__error": str(e)}
+                }))
 
 if not os.environ.get("FLASK_DB_MIGRATION"):
     manager.import_all(app)

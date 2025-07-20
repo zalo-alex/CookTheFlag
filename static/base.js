@@ -1,4 +1,24 @@
 const searchInput = document.getElementById("search-input")
+const runningTasksBadge = document.getElementById("running-tasks")
+
+const ws = new WebSocket("ws://" + location.host + "/ws")
+
+ws.onmessage = (event) => {
+    const payload = JSON.parse(event.data)
+    if (payload.type == "response") {
+        handleResponseData(payload.data)
+    }
+    else if (payload.type == "done") {
+        resetButton()
+    }
+    else if (payload.type == "running_tasks") {
+        updateRunningTasks(payload.data.amount)
+    }
+}
+
+function updateRunningTasks(amount) {
+    runningTasksBadge.textContent = amount
+}
 
 function search() {
     const links = document.querySelectorAll(".collapse a")

@@ -1,6 +1,5 @@
 let form = undefined
 let resetButton = () => {}
-const ws = new WebSocket("ws://" + location.host + "/ws")
 let autoToggled = true
 let errorAlert = undefined;
 
@@ -16,16 +15,6 @@ function handleResponseData(data) {
         errorAlert.textContent = data.__error
         errorAlert.classList.remove("d-none")
         return
-    }
-}
-
-ws.onmessage = (event) => {
-    const payload = JSON.parse(event.data)
-    if (payload.type == "response") {
-        handleResponseData(payload.data)
-    }
-    else if (payload.type == "done") {
-        resetButton()
     }
 }
 

@@ -19,13 +19,24 @@
             <img class="bi pe-none me-2" width="32" height="32" src="/static/assets/cook.svg" />
             <span class="fs-5 fw-semibold">Cook The Flag</span>
         </a>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 p-1">
+            <a href="/tasks" class="btn position-relative rounded border-0 mt-0 px-0 d-flex align-items-center gap-1">
+                <img src="/static/assets/icons/tasks.svg"/>
+                <div style="width: 15px; height: 15px; font-size: 10px; right: -5px; top: 2px" class="position-absolute d-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-black" id="running-tasks">
+                    {% if running_tasks < 10 %}
+                        {{ running_tasks }}
+                    {% else %}
+                        9+
+                    {% endif %}
+                </div>
+            </a>
             <a href="/files" class="btn rounded border-0 mt-0 px-0 d-flex align-items-center gap-1">
-                <img src="/static/assets/icons/file.svg"/>
+                <img src="/static/assets/icons/folder.svg"/>
             </a>
             <a href="/admin" class="btn rounded border-0 mt-0 px-0 d-flex align-items-center gap-1">
                 <img src="/static/assets/icons/admin.svg"/>
             </a>
+
             <a href="/login" class="btn rounded border-0 mt-0 ms-auto px-0 d-flex align-items-center gap-1">
                 <img src="/static/assets/icons/login.svg"/>
             </a>
