@@ -1,6 +1,6 @@
 from src.module import Module
 from src.layout import *
-from src.regexs import Regexs
+from src.regexs import RegExs
 
 import requests
 
@@ -8,7 +8,7 @@ class CustomModule(Module):
     name = "Requests"
     category = "tool"
     layout = [
-        Input("URL", "url-input", regex=Regexs.URL),
+        Input("URL", "url-input", regex=RegExs.URL),
         Select("Method", "method", ["GET", "POST"]),
         KeyValue("Headers", "headers"),
         Submit("Send", "send"),

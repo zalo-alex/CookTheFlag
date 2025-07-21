@@ -1,11 +1,11 @@
 from src.module import Module
 from src.layout import *
-from src.regexs import Regexs
+from src.regexs import RegExs
 
 class CustomModule(Module):
     name = "Base64 Encode"
     category = "encoding"
-    regex=Regexs.BASE64
+    regex=RegExs.BASE64
     layout = [
         Input("Text Input", "input", textarea=True),
         Submit("Submit", "encode", auto=True),

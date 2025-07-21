@@ -1,6 +1,6 @@
 from src.module import Module
 from src.layout import *
-from src.regexs import Regexs
+from src.regexs import RegExs
 from src.exec import Exec
 
 import json
@@ -10,7 +10,7 @@ class CustomModule(Module):
     name = "DNS Lookup"
     category = "tool"
     layout = [
-        Input("Domain name", "dn-input", regex=Regexs.DOMAIN),
+        Input("Domain name", "dn-input", regex=RegExs.DOMAIN),
         Submit("Lookup", "lookup"),
         Input("WHOIS", "whois-output", textarea=True),
         Input("DNS Records", "records-output", textarea=True),

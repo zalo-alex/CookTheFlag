@@ -1,13 +1,13 @@
 from src.module import Module
 from src.layout import *
-from src.regexs import Regexs
+from src.regexs import RegExs
 
 import hashlib
 
 class CustomModule(Module):
     name = "SHA-1 Encrypt"
     category = "hashing"
-    regex = Regexs.SHA1
+    regex = RegExs.SHA1
     layout = [
         Input("Text Input", "input", textarea=True),
         Submit("Submit", "encode"),

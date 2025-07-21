@@ -1,12 +1,12 @@
 from src.module import Module
 from src.layout import *
-from src.regexs import Regexs
+from src.regexs import RegExs
 
 class CustomModule(Module):
     name = "IPv4 convert"
     category = "encoding"
     layout = [
-        Input("IPv4 Input", "input", regex=Regexs.IPV4),
+        Input("IPv4 Input", "input", regex=RegExs.IPV4),
         Submit("Submit", "encode", auto=True),
         Input("Binary Output", "bin-output"),
         Input("Hex Output", "hex-output"),

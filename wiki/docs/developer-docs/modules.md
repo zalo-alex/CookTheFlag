@@ -56,12 +56,12 @@ It can be usefull if the user want to know the type of string he's searching.
 For more info about RegEx see [:hash: RegEx](./regex.md)
 
 ```python linenums="1"
-from src.regexs import Regexs
+from src.regexs import RegExs
 
 class CustomModule(Module):
     name = "Base64 Encode"
     category = "encoding"
-    regex=Regexs.BASE64
+    regex=RegExs.BASE64
 ```
 
 ## Streaming response

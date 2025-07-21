@@ -1,13 +1,13 @@
 from src.module import Module
 from src.layout import *
-from src.regexs import Regexs
+from src.regexs import RegExs
 from src.exec import Exec
 
 class CustomModule(Module):
     name = "NMap"
     category = "tool"
     layout = [
-        Input("Target", "input", regex=Regexs.IPV4),
+        Input("Target", "input", regex=RegExs.IPV4),
         CheckBox("Service version", "version"),
         CheckBox("OS detection", "os"),
         Submit("Scan", "scan"),

@@ -1,6 +1,6 @@
 import re
 
-class Regexs:
+class RegExs:
     
     BIN = re.compile(r"^(0b)?[01]+(?:\s[01]+)*$")
     HEX = re.compile(r"^(0x)?[0-9a-fA-F]+(?:\s[0-9a-fA-F]+)*$")
