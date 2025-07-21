@@ -5,3 +5,4 @@
  - [:straight_ruler: Layout](./layout.md)
  - [:hash: RegEx](./regex.md)
  - [:paintbrush: Parsers](./parsers.md)
+ - [:man_running_tone1: Tasks](./tasks.md)
