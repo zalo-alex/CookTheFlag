@@ -61,7 +61,7 @@ from src.regexs import RegExs
 class CustomModule(Module):
     name = "Base64 Encode"
     category = "encoding"
-    regex=RegExs.BASE64
+    regex = RegExs.BASE64
 ```
 
 ## Streaming response
