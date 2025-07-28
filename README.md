@@ -44,9 +44,11 @@ sudo docker run --volume ~/.cooktheflag:/data -p 8080:8080 cooktheflag
 ```bash
 git clone https://github.com/zalo-alex/CookTheFlag
 cd CookTheFlag
+python3 -m venv venv
+. ./venv/bin/activate
 pip install -r requirements.txt
 FLASK_DB_MIGRATION=1 flask db upgrade
-python app.py
+python3 app.py
 ```
 </details>
 
