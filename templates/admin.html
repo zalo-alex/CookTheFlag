@@ -22,11 +22,23 @@
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
-    </div>
-    <div class="col">
+        <hr>
         <ul class="list-group">
             {% for user in users %}
-                <li class="list-group-item">{{user.username}}</li>
+                <li class="d-flex align-items-center list-group-item">
+                    {{user.username}}
+                    <div class="d-flex gap-4 align-items-center ms-auto">
+                        <form action="/api/admin/user/{{user.id}}/update" method="POST">
+                            <label class="form-label m-0">
+                                <input type="checkbox" class="form-check-input" name="admin" {% if user.admin %}checked{% endif %} oninput="this.form.submit()">
+                                Admin
+                            </label>
+                        </form>
+                        <form action="/api/admin/user/{{user.id}}/delete" method="POST">
+                            <button type="submit" class="btn btn-danger px-2 p-0" type="button">-</button>
+                        </form>
+                    </div>
+                </li>
             {% endfor %}
         </ul>
     </div>

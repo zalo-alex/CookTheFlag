@@ -41,9 +41,8 @@ def init_cook_user():
         if cook_user:
             return
         
-        cook_user = User(username="cook")
+        cook_user = User(username="cook", change_password=True, admin=True)
         cook_user.set_password("cook")
-        cook_user.change_password = True
 
         db.session.add(cook_user)
         db.session.commit()

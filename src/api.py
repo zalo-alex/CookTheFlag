@@ -1,7 +1,8 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, redirect, url_for
 
 from src.files import Files
 from src.auth import auth_route
+from src.models import db, User
 
 files = Files()
 
@@ -30,3 +31,21 @@ def api_files():
         "folders": folders,
         "files": _files
     }
+
+@api.route("/admin/user/<user_id>/update", methods=["POST"])
+@auth_route
+def api_admin_user_update(user_id):
+    admin = request.form.get("admin") == "on"
+
+    db.session.execute(db.update(User).where(User.id == user_id).values(admin=admin))
+    db.session.commit()
+
+    return redirect(url_for("admin"))
+
+@api.route("/admin/user/<user_id>/delete", methods=["POST"])
+@auth_route
+def api_admin_user_delete(user_id):
+    db.session.execute(db.delete(User).where(User.id == user_id))
+    db.session.commit()
+
+    return redirect(url_for("admin"))
