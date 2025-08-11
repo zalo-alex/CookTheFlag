@@ -1,5 +1,5 @@
 from pathlib import Path
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request, redirect, flash, session
 from flask_sock import Sock
 from flask_migrate import Migrate
 from types import GeneratorType
@@ -7,7 +7,7 @@ from types import GeneratorType
 from src.module_manage import ModuleManage
 from src.files import Files
 from src.models import db, User
-from src.auth import is_logged, auth_route, set_user_session
+from src.auth import is_logged, set_user_session, admin_route, logged_route
 from src.globals import data_dir
 from src.api import api
 from src.tasks import Tasks
@@ -50,6 +50,7 @@ def init_cook_user():
 @app.context_processor
 def inject_globals():
     return {
+        "is_logged": is_logged(),
         "modules": manager.modules, 
         "categories": manager.categories,
         "running_tasks": Tasks.amount()
@@ -64,7 +65,7 @@ def index():
     return render_template("index.html")
 
 @app.route("/files")
-@auth_route
+@logged_route
 def files_view():
     path = files.get_path(request.args.get("path", ".")) 
 
@@ -89,7 +90,7 @@ def files_view():
         return render_template("file.html", path=path, lines=lines, filename=files.basename(path), modules=manager.modules, preview=preview, categories=manager.categories)
 
 @app.route("/files/upload", methods=["POST"])
-@auth_route
+@admin_route
 def files_upload():    
     path = files.get_path(request.args.get("path", "."))
 
@@ -104,7 +105,7 @@ def files_upload():
     return redirect(f"/files?path={request.args.get('path', '.')}")
 
 @app.route("/files/delete", methods=["POST"])
-@auth_route
+@admin_route
 def files_delete():    
     path = files.get_path(request.args.get("path", "."))
 
@@ -137,13 +138,13 @@ def regex(b64_query):
     }
 
 @app.route("/admin")
-@auth_route
+@admin_route
 def admin():
     users = User.query.all()
     return render_template("admin.html", users=users)
 
 @app.route("/admin/user/create", methods=["POST"])
-@auth_route
+@admin_route
 def admin_user_create():
     username = request.form.get("username")
     password = request.form.get("password")
@@ -230,13 +231,18 @@ def change_password_username(username):
     
     return render_template("change-password.html", username=username)
 
+@app.route("/logout", methods=["POST"])
+def logout():
+    session.clear()
+    return redirect("/login")
+
 @app.route("/tasks")
-@auth_route
+@logged_route
 def tasks():
     return render_template("tasks.html", tasks=Tasks.all)
 
 @app.route("/tasks/stop", methods=["POST"])
-@auth_route
+@logged_route
 def tasks_stop():
     task_id = request.args.get("id")
     if not task_id or task_id not in Tasks.all:
@@ -245,7 +251,7 @@ def tasks_stop():
     return redirect("/tasks")
 
 @sock.route('/ws')
-@auth_route
+@logged_route
 def ws_route(ws):
     ws_clients.append(ws)
 

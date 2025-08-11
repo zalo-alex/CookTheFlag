@@ -1,7 +1,7 @@
 from flask import Blueprint, request, redirect, url_for
 
 from src.files import Files
-from src.auth import auth_route
+from src.auth import logged_route, admin_route
 from src.models import db, User
 
 files = Files()
@@ -9,7 +9,7 @@ files = Files()
 api = Blueprint("api", __name__, url_prefix="/api")
 
 @api.route("/files")
-@auth_route
+@logged_route
 def api_files():
     path = files.get_path(request.args.get("path", ".")) 
 
@@ -33,7 +33,7 @@ def api_files():
     }
 
 @api.route("/admin/user/<user_id>/update", methods=["POST"])
-@auth_route
+@admin_route
 def api_admin_user_update(user_id):
     admin = request.form.get("admin") == "on"
 
@@ -43,7 +43,7 @@ def api_admin_user_update(user_id):
     return redirect(url_for("admin"))
 
 @api.route("/admin/user/<user_id>/delete", methods=["POST"])
-@auth_route
+@admin_route
 def api_admin_user_delete(user_id):
     db.session.execute(db.delete(User).where(User.id == user_id))
     db.session.commit()

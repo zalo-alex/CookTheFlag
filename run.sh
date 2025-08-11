@@ -18,10 +18,17 @@ mkdir -p ~/.cooktheflag/
 echo " - CookTheFlag running as $USER"
 echo " - Shared folder: $HOME/.cooktheflag"
 
-if [ $1 ] && [ $1 == "build" ]
+if [ $1 ]
 then
-    docker build -t cooktheflag .
-    docker run --volume ~/.cooktheflag:/data -p 8080:8080 cooktheflag
+    if [ $1 == "build" ]
+    then
+        docker build -t cooktheflag .
+        docker run --volume ~/.cooktheflag:/data -p 8080:8080 cooktheflag
+    elif [ $1 == "dev" ]
+    then
+        . venv/bin/activate
+        python3 app.py
+    fi
 else
     docker run --pull=always --volume ~/.cooktheflag:/data -p 8080:8080 azalo/cooktheflag
 fi

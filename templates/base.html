@@ -39,9 +39,15 @@
                 {{ icons.admin() }}
             </a>
 
+            {% if not is_logged %}
             <a href="/login" class="btn rounded border-0 mt-0 ms-auto px-0 d-flex align-items-center gap-1">
                 {{ icons.login() }}
             </a>
+            {% else %}
+            <form action="/logout" method="post" class="ms-auto">
+                <button class="btn rounded border-0 mt-0 px-0 d-flex align-items-center gap-1">{{ icons.logout() }}</button>
+            </form>
+            {% endif %}
         </div>
         <div>
             <input type="text" class="form-control mb-2" placeholder="Search" id="search-input" oninput="search()">
@@ -74,6 +80,13 @@
         </ul>
     </div>
     <div class="container w-100 pt-5">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </div>
     {% include "svgs.html" %}
