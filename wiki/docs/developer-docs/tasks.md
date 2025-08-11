@@ -17,7 +17,7 @@ class Task:
         """Post run or cancel cleanup"""
 ```
 
-## Usage example:
+## Usage example
 
 ```python title="modules/test_tasks.py" linenums="1"
 [...]
