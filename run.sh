@@ -4,6 +4,7 @@ docker > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
     echo Docker is not installed.
+    exit
 fi
 
 docker info > /dev/null 2>&1

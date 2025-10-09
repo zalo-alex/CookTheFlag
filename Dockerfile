@@ -11,6 +11,9 @@ RUN apt-get install -y hashcat
 # Install WHOIS
 RUN apt-get install -y whois
 
+# Install feroxbuster
+RUN curl -sL https://raw.githubusercontent.com/epi052/feroxbuster/main/install-nix.sh | bash -s /bin
+
 # Install CookTheFlag
 WORKDIR /app
 
